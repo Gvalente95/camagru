@@ -1,0 +1,14 @@
+services:
+  client:
+    build: ./client
+    ports:
+      - "4000:80"
+    volumes:
+      - ./client:/usr/share/nginx/html:ro
+
+  server:
+    build: ./server
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./server:/app
