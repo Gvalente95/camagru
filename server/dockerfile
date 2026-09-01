@@ -11,6 +11,8 @@ RUN apk add --no-cache \
 
 COPY . .
 
+ENTRYPOINT ["sh", "/app/docker-entrypoint.sh"]
+
 EXPOSE 8080
 
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]
