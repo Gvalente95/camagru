@@ -2,7 +2,7 @@ async function init() {
   let hasVerifStatus = handleVerificationStatus() || handlePasswordResetLink();
   let isInChangeLink = !hasVerifStatus && handleEmailChangeLink();
 
-  if (!hasVerifStatus) await update_auth_api();
+  if (!hasVerifStatus) await getMe();
 
   updateDom();
 
@@ -11,7 +11,7 @@ async function init() {
     setLocation("/gallery");
     return;
   }
-  if ((path === "/gallery" || path === "/edit" || path === "/account") && !CURRENT_USER) {
+  if ((path === "/gallery" || path === "/creation" || path === "/account") && !CURRENT_USER) {
     setLocation("/forbidden");
     return;
   }

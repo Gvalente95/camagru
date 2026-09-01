@@ -1,5 +1,6 @@
 async function updateSideImages() {
   async function eraseImage(id) {
+    playAudio(AUDIO.delete);
     const res = await deleteImage(id);
     if (res.ok) {
       const idx = CAPTURED_IMAGE_IDS.findIndex((sid) => sid === id);

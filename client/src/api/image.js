@@ -1,6 +1,6 @@
-const fetchThumbnails = async () => {
+const fetchStickers = async () => {
   try {
-    const res = await fetch(`${API}/thumbnails`, {
+    const res = await fetch(`${API}/stickers`, {
       method: "GET",
       credentials: "include",
     });
@@ -12,10 +12,10 @@ const fetchThumbnails = async () => {
   }
 };
 
-async function createImage(background, thumbnailId, placement) {
+async function createImage(background, stickerId, placement) {
   const formData = new FormData();
   formData.append("background", background, "background.png");
-  formData.append("thumbnail_id", thumbnailId);
+  formData.append("sticker_id", stickerId);
   formData.append("placement", JSON.stringify(getOverlayPlacement()));
 
   return await fetch(`${API}/images`, {

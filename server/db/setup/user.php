@@ -8,7 +8,7 @@ $db->exec("
         password TEXT NOT NULL,
     	email_verified INTEGER NOT NULL DEFAULT 0,
         dark_mode INTEGER NOT NULL DEFAULT 0,
-		notify_comment INTEGER NOT NULL DEFAULT 0
+		notify_comment INTEGER NOT NULL DEFAULT 1
     )
 ");
 

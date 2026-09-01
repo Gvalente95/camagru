@@ -9,12 +9,15 @@ function initInputBg() {
     videoBg.src = UPLOADED_BG;
     setClassVisibility("erase-bg-button", true);
     stopWebcam();
+    setClassVisibility("video-error-message", false);
+
     if (SELECTED_THUMBNAIL_ID) toggleCaptureButton(true);
   });
   setClassVisibility("erase-bg-button", false);
 }
 
 async function initEditPage() {
+  watchCameraPermission();
   initInputBg();
   initThumbnails();
 }

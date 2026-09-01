@@ -5,13 +5,18 @@ require_once __DIR__ . "/../utils/session.php";
 function getMe(PDO $db): void
 {
     $user = getUserFromSession($db);
-    if ($user === null) {
-        http_response_code(401);
+	if ($user === null) {
+        echo json_encode([
+            "authenticated" => false,
+            "user" => null
+        ]);
         return;
-    }
+    }	
     header("Content-Type: application/json");
-    echo json_encode($user);
-}
+ 	echo json_encode([
+        "authenticated" => true,
+        "user" => $user
+]);}
 
 function patchMe(PDO $db): void
 {

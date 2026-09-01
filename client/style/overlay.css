@@ -75,11 +75,28 @@
 
 .notification {
   position: absolute;
+
   left: 50%;
   top: 20%;
   transform: translate(-50%, -50%);
+
   z-index: 99999;
+
   font-size: 24px;
   padding: 20px;
+
   background-color: rgba(202, 199, 199, 0.1);
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.notification.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }

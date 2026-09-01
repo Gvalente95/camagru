@@ -70,6 +70,22 @@ function sendEmailChange(string $email, string $name, string $token): bool
 	return finalizeEmail($payload);
 }
 
+
+function notify_image_author(
+    string $sender_name,
+    string $comment,
+    string $author_email
+): bool {
+    $payload = json_encode([
+        "from" => $sender_name . " <onboarding@resend.dev>",
+        "to" => [$author_email],
+        "subject" => $sender_name . " commented on your image.",
+        "html" => htmlspecialchars($comment)
+    ]);
+
+    return finalizeEmail($payload);
+}
+
 function email_already_taken(PDO $db, string $email): bool
 {
     $stmt = $db->prepare("

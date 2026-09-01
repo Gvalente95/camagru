@@ -1,10 +1,20 @@
-.comment-list {
+.comments-container {
   position: absolute;
+  top: 100%;
+  left: 0;
   right: 0;
-  top: calc(100%);
+  width: 100%;
+  display: none;
+  z-index: 1000;
+}
 
-  width: 90%;
-  max-height: 180px;
+.comments-container.visible {
+  display: block;
+}
+
+.comment-list {
+  width: 100%;
+  max-height: 200px;
 
   display: flex;
   flex-direction: column;
@@ -15,12 +25,10 @@
   overflow-y: auto;
 
   background: var(--cell-control-bg);
-  /* backdrop-filter: blur(6px); */
-
+  backdrop-filter: blur(6px);
   border-top-left-radius: 8px;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
-  z-index: 10;
   color: black;
 }
 

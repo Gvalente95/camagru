@@ -12,6 +12,7 @@ function updateSubmitState(form) {
 
   const changed = inputs.some((input) => {
     if (input.type === "checkbox") {
+      playAudio(AUDIO.click);
       return input.checked !== input.defaultChecked;
     }
 
@@ -124,6 +125,7 @@ async function handleResetPasswordConfirm(event, form) {
 async function handleAccountForm(event, form) {
   event.preventDefault();
   togglePromptError(null);
+  playAudio(AUDIO.click);
 
   if (!CURRENT_USER) return;
 
@@ -178,9 +180,10 @@ async function handleAccountForm(event, form) {
       togglePromptError(data.error ?? "Error: User Settings");
       return;
     }
+    toggleNotification("User settings successfully changed!");
   }
 
-  await update_auth_api();
+  await getMe();
 
   togglePrompt(null);
 

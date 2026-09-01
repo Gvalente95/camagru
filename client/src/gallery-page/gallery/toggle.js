@@ -1,27 +1,53 @@
-async function toggleCommentsView(imageId) {
-  if (VIEWED_COMMENTS_ID !== null) {
-    const cell = document.getElementById(`gallery-image_${VIEWED_COMMENTS_ID}`);
-    console.warn("cell:", cell);
-    const comments = cell?.querySelector(".comment-list");
-    console.warn("comments:", comments);
+let currentClickHandler = null;
 
-    comments?.remove();
-  }
+async function toggleCommentsView(imageId) {
+  const cell = document.getElementById(`gallery-image_${imageId}`);
+  if (!cell) return;
+
+  playAudio(AUDIO.click);
+
+  const existingContainer = cell.querySelector(".comments-container");
 
   if (VIEWED_COMMENTS_ID === imageId) {
     VIEWED_COMMENTS_ID = null;
+    existingContainer?.remove();
+    if (currentClickHandler) {
+      document.removeEventListener("click", currentClickHandler);
+      currentClickHandler = null;
+    }
     return;
+  }
+
+  // Close previous comments and remove its handler
+  if (VIEWED_COMMENTS_ID !== null) {
+    const prevCell = document.getElementById(`gallery-image_${VIEWED_COMMENTS_ID}`);
+    prevCell?.querySelector(".comments-container")?.remove();
+    if (currentClickHandler) {
+      document.removeEventListener("click", currentClickHandler);
+      currentClickHandler = null;
+    }
   }
 
   VIEWED_COMMENTS_ID = imageId;
 
-  const cell = document.getElementById(`gallery-image_${imageId}`);
+  // Create comments container
+  const container = document.createElement("div");
+  container.className = "comments-container visible";
 
-  if (!cell) return;
+  const commentsList = await addCommentsList(imageId);
+  container.appendChild(commentsList);
 
-  const comments = await addCommentsList(imageId);
+  cell.appendChild(container);
 
-  cell.appendChild(comments);
+  // Close comments when clicking outside
+  const handleClickOutside = (e) => {
+    if (!container.contains(e.target) && !cell.contains(e.target)) {
+      toggleCommentsView(imageId);
+    }
+  };
+
+  currentClickHandler = handleClickOutside;
+  document.addEventListener("click", handleClickOutside);
 }
 
 async function toggleLike(imageId) {
@@ -29,6 +55,7 @@ async function toggleLike(imageId) {
 
   if (!imageData) return;
 
+  playAudio(AUDIO.click);
   const action = imageData.liked_by_me ? removeLike : addLike;
 
   const res = await action(imageId);

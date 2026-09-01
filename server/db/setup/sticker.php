@@ -1,7 +1,7 @@
 <?php
 
 $db->exec("
-	CREATE TABLE thumbnails (
+	CREATE TABLE stickers (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		filename TEXT NOT NULL UNIQUE,
 		user_id INTEGER,
@@ -10,7 +10,7 @@ $db->exec("
 ");
 
 $stmt = $db->prepare("
-    INSERT OR IGNORE INTO thumbnails (filename, name)
+    INSERT OR IGNORE INTO stickers (filename, name)
     VALUES (:filename, :name)
 ");
 

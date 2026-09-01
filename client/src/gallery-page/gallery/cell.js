@@ -3,9 +3,10 @@ async function updateGalleryCell(cell, imageData) {
 
   const currentUserId = CURRENT_USER?.id ?? null;
 
-  const label = cell.querySelector(".cell-label");
-  const image = cell.querySelector(".cell-image");
-  const controls = cell.querySelector(".cell-controls");
+  const imageContainer = cell.querySelector(".cell-image-container");
+  const label = imageContainer.querySelector(".cell-label");
+  const image = imageContainer.querySelector(".cell-image");
+  const controls = imageContainer.querySelector(".cell-controls");
 
   label.textContent = username;
 
@@ -38,22 +39,11 @@ async function updateGalleryCell(cell, imageData) {
   if (currentUserId && Number(currentUserId) === Number(user_id)) {
     controls.appendChild(addElement(() => handleDeleteImage(id), "delete.png"));
   }
-
-  if (VIEWED_COMMENTS_ID === id) {
-    const existing = cell.querySelector(".comments-container");
-
-    if (!existing) {
-      const comments = await addCommentsList(id);
-      cell.appendChild(comments);
-    }
-  } else {
-    cell.querySelector(".comments-container")?.remove();
-  }
 }
 
-function createGalleryCell(id) {
+function createGalleryCell(id, isMine) {
   const cell = document.createElement("div");
-  cell.className = "cell";
+  cell.className = `cell${isMine ? " mine" : ""}`;
   cell.id = `gallery-image_${id}`;
   cell.dataset.imageId = id;
 
@@ -66,9 +56,13 @@ function createGalleryCell(id) {
   const controls = document.createElement("div");
   controls.className = "cell-controls";
 
-  cell.appendChild(label);
-  cell.appendChild(image);
-  cell.appendChild(controls);
+  const imageContainer = document.createElement("div");
+  imageContainer.className = "cell-image-container";
+  imageContainer.appendChild(label);
+  imageContainer.appendChild(image);
+  imageContainer.appendChild(controls);
+
+  cell.appendChild(imageContainer);
 
   return cell;
 }

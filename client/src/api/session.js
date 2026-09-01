@@ -25,9 +25,9 @@ const login = async (name, password) => {
   });
 
   if (res.ok) {
-    update_auth_api();
+    getMe();
     setLocation("/");
-  } else console.warn("Error while logging in");
+  }
 
   return res;
 };
@@ -41,15 +41,27 @@ const logout = async () => {
   return res;
 };
 
-const update_auth_api = async () => {
+const getMe = async () => {
   const res = await fetch(`${API}/me`, {
     credentials: "include",
   });
-  const is_authenticated = res.ok;
-  let user = null;
-  if (is_authenticated) {
-    user = await res.json();
-    CURRENT_USER = { name: user.name, email: user.email, id: user.id, dark_mode: user.dark_mode, notify_comment: user.notify_comment };
-    setDarkMode(CURRENT_USER.dark_mode);
+
+  const data = await res.json();
+
+  if (!data.authenticated) {
+    CURRENT_USER = null;
+    return;
   }
+
+  const user = data.user;
+
+  CURRENT_USER = {
+    name: user.name,
+    email: user.email,
+    id: user.id,
+    dark_mode: user.dark_mode,
+    notify_comment: user.notify_comment,
+  };
+
+  setDarkMode(CURRENT_USER.dark_mode);
 };

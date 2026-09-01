@@ -13,11 +13,20 @@
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: row;
+  overflow-y: auto;
 }
 
 .main h1 {
   align-self: center;
   text-align: center;
+}
+
+.empty-gallery-label {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
 }
 
 @media (max-width: 700px) {
@@ -29,7 +38,6 @@
   .main {
     flex-direction: column;
     border-right: none;
-    border-bottom: 1px solid black;
     min-height: 0;
   }
 }

@@ -42,12 +42,12 @@
     <script src="src/dom/dom.js"></script>
     <script src="src/dom/prompt.js"></script>
 
-    <div id="notification" class="notification" hidden></div>
+    <div id="notification" class="notification"></div>
 
     <header>
       <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
       <button class="header-link" onclick="setLocation('/account')" hidden>Account</button>
-      <button class="header-link" onclick="setLocation('/edit')" hidden>Edit</button>
+      <button class="header-link" onclick="setLocation('/create')" hidden>Create</button>
       <button class="header-link" onclick="setLocation('/gallery')" hidden disabled>Gallery</button>
 
       <div class="sign-zone">
@@ -58,7 +58,16 @@
     </header>
 
     <div class="content gallery-layout">
-      <div class="main"></div>
+      <div class="main">
+        <label class="empty-gallery-label">No photos yet... Be the first to make one!</label>
+
+        <div class="grid-controls" hidden></div>
+
+        <div class="grid-container">
+          <div class="images-grid"></div>
+        </div>
+      </div>
+
       <div class="overlay" id="overlay" onclick="togglePrompt(null)" hidden>
         <div class="prompt-box" onclick="event.stopPropagation()">
           <form
@@ -70,12 +79,12 @@
             <div class="ftitle">Sign in</div>
             <label>
               Username:
-              <input type="text" name="fname" />
+              <input type="text" name="fname" autocomplete="name" />
             </label>
 
             <label>
               Password:
-              <input type="password" name="fpassword" />
+              <input type="password" name="fpassword" autocomplete="current-password" />
             </label>
 
             <div class="form-buttons">
@@ -101,17 +110,17 @@
             <div class="ftitle">Sign up</div>
             <label>
               Username:
-              <input type="text" name="fname" />
+              <input type="text" name="fname" autocomplete="name" />
             </label>
 
             <label id="femail">
               Email:
-              <input type="text" name="femail" />
+              <input type="text" name="femail" autocomplete="email" />
             </label>
 
             <label>
               Password:
-              <input type="password" name="fpassword" />
+              <input type="password" name="fpassword" autocomplete="new-password" />
             </label>
 
             <div class="form-buttons">
@@ -130,11 +139,11 @@
             <div class="ftitle">Reset Password</div>
             <label>
               Username:
-              <input type="text" name="fname" />
+              <input type="text" name="fname" autocomplete="name" />
             </label>
             <label id="femail">
               Email:
-              <input type="text" name="femail" />
+              <input type="text" name="femail" autocomplete="email" />
             </label>
 
             <div class="form-buttons">
@@ -151,9 +160,10 @@
             hidden
           >
             <div class="ftitle">Reset Password</div>
+            <input type="text" name="fname" autocomplete="name" hidden />
             <label>
               New Password:
-              <input type="password" name="fpassword" />
+              <input type="password" name="fpassword" autocomplete="new-password" />
             </label>
             <div class="form-buttons">
               <button type="button" onclick="togglePrompt(null)">Cancel</button>
@@ -171,15 +181,15 @@
             <div class="ftitle">Account</div>
             <label>
               Name:
-              <input type="text" name="fname" />
+              <input type="text" name="fname" autocomplete="name" />
             </label>
             <label id="femail">
               Email:
-              <input type="text" name="femail" />
+              <input type="text" name="femail" autocomplete="email" />
             </label>
             <label>
               Password:
-              <input type="password" name="fpassword" />
+              <input type="password" name="fpassword" autocomplete="current-password" />
             </label>
             <div class="form-buttons">
               <button type="button" onclick="togglePrompt(null)">Cancel</button>
@@ -189,17 +199,6 @@
             <label class="error-label"></label>
           </form>
         </div>
-      </div>
-
-      <div class="grid-container">
-        <div class="images-grid"></div>
-      </div>
-
-      <div class="grid-controls">
-        <button class="page-button" onclick="changePage(-1)">&lt</button>
-        <label class="page-index-label">0/0</label>
-        <button class="page-button right" onclick="changePage(1)">&gt</button>
-        <label class="page-info-label">0/0</label>
       </div>
     </div>
 

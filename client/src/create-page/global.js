@@ -6,7 +6,12 @@ let SELECTED_THUMBNAIL_ID = null;
 
 let UPLOADED_BG = null;
 
-let thumbnailDragOffsetX = 0;
-let thumbnailDragOffsetY = 0;
+let stickerDragOffsetX = 0;
+let stickerDragOffsetY = 0;
 
 let IS_DRAGGING_VIGNETTE = false;
+let IS_RESIZING_VIGNETTE = false;
+
+let CAN_TAKE_PHOTO = true;
+
+let CAN_USE_RECORDER = true;

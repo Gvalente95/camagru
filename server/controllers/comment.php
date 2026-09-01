@@ -1,25 +1,52 @@
 <?php
 
+require_once __DIR__ . "/../utils/email.php";
 
-function addComment(PDO $db, $imageId){
+function getImageAuthor(PDO $db, int $imageId)
+{
+    $stmt = $db->prepare("
+        SELECT users.*
+        FROM users
+        JOIN images ON images.user_id = users.id
+        WHERE images.id = :image_id
+    ");
+
+    $stmt->execute([
+        "image_id" => $imageId
+    ]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function addComment(PDO $db, $imageId)
+{
     header("Content-Type: application/json");
 
     $user = getUserFromSession($db);
-	if ($user === null) {
+
+    if ($user === null) {
         http_response_code(401);
         echo json_encode(["error" => "Unauthorized"]);
         return;
     }
 
-    $content = file_get_contents("php://input");
+    $content = trim(file_get_contents("php://input"));
 
-    if ($content === false || trim($content) === "") {
+    if ($content === "") {
         http_response_code(400);
         echo json_encode(["error" => "Comment cannot be empty"]);
         return;
     }
 
-	 $stmt = $db->prepare("
+    $author = getImageAuthor($db, $imageId);
+
+    if (!$author) {
+        http_response_code(404);
+        echo json_encode(["error" => "Image not found"]);
+        return;
+    }
+
+    $stmt = $db->prepare("
         INSERT INTO image_comments (image_id, user_id, content)
         VALUES (:image_id, :user_id, :content)
     ");
@@ -27,14 +54,24 @@ function addComment(PDO $db, $imageId){
     $stmt->execute([
         "image_id" => $imageId,
         "user_id" => $user["id"],
-        "content" => trim($content),
+        "content" => $content,
     ]);
-	http_response_code(201);
+
+    $commentId = $db->lastInsertId();
+
+    if ($author["notify_comment"] && $author["id"] !== $user["id"]) {
+        notify_image_author(
+            $user["name"],
+            $content,
+            $author["email"]
+        );
+    }
+
+    http_response_code(201);
 
     echo json_encode([
-        "id" => $db->lastInsertId(),
+        "id" => $commentId,
     ]);
-
 }
 
 function removeComment(PDO $db, int $commentId): void
@@ -68,7 +105,6 @@ function removeComment(PDO $db, int $commentId): void
 
     http_response_code(204);
 }
-
 
 function getImageComments(PDO $db, int $imageId): void
 {

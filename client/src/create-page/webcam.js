@@ -6,12 +6,28 @@ function getVideoMetrics() {
   return { width, height };
 }
 
+async function watchCameraPermission() {
+  try {
+    const permission = await navigator.permissions.query({ name: "camera" });
+
+    permission.onchange = () => {
+      if (permission.state === "granted" && !UPLOADED_BG) startWebcamStream();
+      else if (IS_RECORDING) stopWebcam();
+    };
+  } catch {}
+}
+
 async function startWebcamStream() {
   const videoContainer = document.querySelector(".video-container");
   const video = document.querySelector("video");
   const spinner = document.querySelector(".spinner-container");
 
   if (!videoContainer || !video) return;
+
+  if (video.srcObject) {
+    video.srcObject.getTracks().forEach((track) => track.stop());
+    video.srcObject = null;
+  }
 
   spinner.hidden = false;
 
@@ -39,16 +55,16 @@ async function startWebcamStream() {
     video.style.objectFit = "cover";
 
     IS_RECORDING = true;
+    CAN_USE_RECORDER = true;
 
     setClassVisibility("video-error-message", false);
     spinner.hidden = true;
 
     toggleCaptureButton(true);
-  } catch (err) {
-    CAN_USE_RECORDER = err.name + ": " + err.message;
-
-    const el = document.querySelector(".video-error-message");
-    if (el) el.hidden = false;
+  } catch {
+    CAN_USE_RECORDER = false;
+    spinner.hidden = true;
+    setClassVisibility("video-error-message", true);
   }
 }
 

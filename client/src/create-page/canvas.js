@@ -63,12 +63,18 @@ function captureBaseImage() {
 
 async function captureImage() {
   if (!SELECTED_THUMBNAIL_ID) return;
+  if (!CAN_TAKE_PHOTO) return;
+
+  CAN_TAKE_PHOTO = false;
+
+  document.querySelector(".capture-webcam-button").disabled = true;
 
   const flashOverlay = document.querySelector(".flash-overlay");
   flashOverlay.className = "flash-overlay flash";
   setTimeout(() => {
     flashOverlay.className = "flash-overlay";
   }, 200);
+  playAudio(AUDIO.capture);
 
   const baseCanvas = captureBaseImage();
 
@@ -81,8 +87,11 @@ async function captureImage() {
     HAS_UNSAVED_CHANGES = true;
     CAPTURED_IMAGE_IDS.push(data.id);
     updateSideImages();
+    if (SELECTED_THUMBNAIL_ID) document.querySelector(".capture-webcam-button").disabled = false;
+    CAN_TAKE_PHOTO = true;
   } else {
     const error = await res.json();
-    console.warn(error);
+    document.querySelector(".capture-webcam-button").disabled = false;
+    CAN_TAKE_PHOTO = true;
   }
 }

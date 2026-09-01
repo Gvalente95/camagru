@@ -42,13 +42,13 @@
     <script src="/src/dom/dom.js"></script>
     <script src="/src/dom/prompt.js"></script>
 
-    <div id="notification" class="notification" hidden></div>
+    <div id="notification" class="notification"></div>
 
     <header>
       <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
       <button onclick="setLocation('/account')">Account</button>
-      <button onclick="setLocation('/edit')">Edit</button>
-      <button class="selected" onclick="setLocation('/gallery')" disabled>Gallery</button>
+      <button onclick="setLocation('/create')">Create</button>
+      <button class="selected" onclick="setLocation('/gallery')">Gallery</button>
 
       <div class="sign-zone">
         <button id="logout-button" onclick="logout()">Logout</button>
@@ -57,13 +57,9 @@
 
     <div class="content gallery-layout">
       <div class="main">
-        <div class="grid-controls">
-          <button class="page-button" onclick="changePage(-1)">&lt</button>
-          <label class="page-index-label">0/0</label>
-          <button class="page-button right" onclick="changePage(1)">&gt</button>
+        <label class="empty-gallery-label" hidden>No photos yet... Be the first to make one!</label>
 
-          <label class="page-info-label">0/0</label>
-        </div>
+        <div class="grid-controls"></div>
 
         <div class="grid-container">
           <div class="images-grid"></div>

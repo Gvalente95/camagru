@@ -28,13 +28,13 @@
     <script src="/src/dom/dom.js"></script>
     <script src="/src/dom/prompt.js"></script>
 
-    <div id="notification" class="notification" hidden></div>
+    <div id="notification" class="notification"></div>
 
     <header>
       <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
 
       <button class="selected" onclick="setLocation('/account')" disabled>Account</button>
-      <button onclick="setLocation('/edit')">Edit</button>
+      <button onclick="setLocation('/create')">Create</button>
       <button onclick="setLocation('/gallery')">Gallery</button>
 
       <div class="sign-zone">
@@ -53,15 +53,15 @@
             <div class="ftitle"></div>
             <label>
               Name:
-              <input type="text" name="fname" />
+              <input type="text" name="fname" autocomplete="name" />
             </label>
             <label id="femail">
               Email:
-              <input type="text" name="femail" />
+              <input type="text" name="femail" autocomplete="email" />
             </label>
             <label>
               Password:
-              <input type="password" name="fpassword" />
+              <input type="password" name="fpassword" autocomplete="current-password" />
             </label>
 
             <label>

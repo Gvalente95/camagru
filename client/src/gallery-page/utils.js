@@ -17,9 +17,3 @@ function addElement(onclick, imagePath, count) {
   }
   return container;
 }
-
-async function onImagesUpdate() {
-  const res = await fetchImages();
-  if (res.ok) ALL_IMAGES = await res.json();
-  await updateGalleryPage();
-}

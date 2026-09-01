@@ -39,3 +39,7 @@ db_passresets:
 db_reset:
 	rm -f server/db/database.sqlite
 	php server/db/setup/setup.php
+
+secret:
+	@read -p "Resend API key: " key; \
+	echo "RESEND_API_KEY=$$key" > server/.env

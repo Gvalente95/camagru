@@ -27,10 +27,18 @@ function setIdDisabled(id, disabled) {
 }
 
 function setDarkMode(dark) {
-  console.warn("DARK MODE SET TO = ", dark);
   document.documentElement.classList.toggle("dark", dark);
 }
 
 function isDarkMode() {
-  const isDark = document.documentElement.classList.contains("dark");
+  return document.documentElement.classList.contains("dark");
+}
+
+function clamp(v, min, max) {
+  return v < min ? min : v > max ? max : v;
+}
+
+function playAudio(audio) {
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
 }

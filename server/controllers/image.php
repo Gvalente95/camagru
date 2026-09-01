@@ -21,9 +21,9 @@ function createImage(PDO $db): void
         return;
     }
 
-    if (!isset($_POST["thumbnail_id"])) {
+    if (!isset($_POST["sticker_id"])) {
         http_response_code(400);
-        echo json_encode(["error" => "Missing thumbnail_id"]);
+        echo json_encode(["error" => "Missing sticker_id"]);
         return;
     }
 
@@ -34,7 +34,7 @@ function createImage(PDO $db): void
     }
 
     $bg = $_FILES["background"];
-    $thumbnailId = (int) $_POST["thumbnail_id"];
+    $stickerId = (int) $_POST["sticker_id"];
     $placementRaw = $_POST["placement"];
 
     $placement = json_decode($placementRaw, true);
@@ -45,9 +45,9 @@ function createImage(PDO $db): void
         return;
     }
 
-    if (!$thumbnailId) {
+    if (!$stickerId) {
         http_response_code(400);
-        echo json_encode(["error" => "Missing Thumbnail"]);
+        echo json_encode(["error" => "Missing Vignette"]);
         return;
     }
 
@@ -67,13 +67,13 @@ function createImage(PDO $db): void
 
     $stmt = $db->prepare("
         SELECT filename
-        FROM thumbnails
+        FROM stickers
         WHERE id = :id
         AND (user_id IS NULL OR user_id = :user_id)
     ");
 
     $stmt->execute([
-        "id" => $thumbnailId,
+        "id" => $stickerId,
         "user_id" => $user["id"],
     ]);
 
@@ -81,15 +81,15 @@ function createImage(PDO $db): void
 
     if ($sticker === false) {
         http_response_code(404);
-        echo json_encode(["error" => "Thumbnail not found"]);
+        echo json_encode(["error" => "Vignette not found"]);
         return;
     }
 
-    $overlayPath = __DIR__ . "/../assets/thumbnails/" . $sticker["filename"];
+    $overlayPath = __DIR__ . "/../assets/stickers/" . $sticker["filename"];
 
     if (!is_file($overlayPath)) {
         http_response_code(404);
-        echo json_encode(["error" => "Thumbnail file not found"]);
+        echo json_encode(["error" => "Vignette file not found"]);
         return;
     }
 

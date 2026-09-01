@@ -22,9 +22,37 @@ function addCommentRow(imageId) {
   async function onSend() {
     const content = commentInput.value.trim();
     if (!content) return;
-    await addComment(imageId, content);
-    onImagesUpdate();
-    commentInput.value = "";
+    playAudio(AUDIO.send);
+
+    const res = await addComment(imageId, content);
+
+    if (res.ok) {
+      // Update comment count in ALL_IMAGES
+      const imageData = ALL_IMAGES.find((img) => img.id === imageId);
+      if (imageData) {
+        imageData.comment_count += 1;
+
+        // Update the comment count badge in the UI
+        const cell = document.getElementById(`gallery-image_${imageId}`);
+        const countIcons = cell?.querySelectorAll(".count-icon");
+        countIcons?.forEach((countIcon, index) => {
+          // Second count icon is the comment count (first is likes, second is comments)
+          if (index === 1) {
+            countIcon.textContent = imageData.comment_count;
+          }
+        });
+      }
+
+      // Refresh the comments container to show the new comment
+      const cell = document.getElementById(`gallery-image_${imageId}`);
+      const container = cell?.querySelector(".comments-container");
+      if (container) {
+        container.replaceChildren();
+        const updatedCommentsList = await addCommentsList(imageId);
+        container.appendChild(updatedCommentsList);
+      }
+      commentInput.value = "";
+    }
   }
 
   sendButton.onclick = onSend;

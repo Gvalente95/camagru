@@ -1,50 +1,52 @@
-async function updateGalleryPage() {
+async function updatePageCells() {
   const gridElement = document.querySelector(".images-grid");
 
   const start = CURRENT_PAGE * IMAGES_PER_PAGE;
   const end = start + IMAGES_PER_PAGE;
-  const pageImages = ALL_IMAGES.slice(start, end);
+  const pageIds = new Set(ALL_IMAGES.slice(start, end).map((image) => String(image.id)));
 
-  const pageIds = new Set(pageImages.map((image) => String(image.id)));
-
+  // Show/hide cells based on current page
   for (const cell of gridElement.querySelectorAll(".cell")) {
     const id = cell.dataset.imageId;
-
-    if (!pageIds.has(id)) {
-      cell.remove();
-    }
+    cell.hidden = !pageIds.has(id);
   }
-
-  for (const image of pageImages) {
-    let cell = document.getElementById(`gallery-image_${image.id}`);
-
-    if (!cell) {
-      cell = createGalleryCell(image.id);
-      gridElement.appendChild(cell);
-    }
-
-    await updateGalleryCell(cell, image);
-  }
-
-  setImageRatios();
 }
 
-function changePage(direction) {
+function changePageIndex(idx) {
+  if (CURRENT_PAGE === idx) return;
   const imagesLength = ALL_IMAGES.length;
 
+  playAudio(AUDIO.click);
   const maxPage = Math.max(0, Math.ceil(imagesLength / IMAGES_PER_PAGE) - 1);
 
-  CURRENT_PAGE = Math.max(0, Math.min(CURRENT_PAGE + direction, maxPage));
+  CURRENT_PAGE = idx;
 
-  document.querySelector(".page-button").disabled = CURRENT_PAGE === 0;
-  document.querySelector(".page-button.right").disabled = CURRENT_PAGE >= maxPage;
+  updatePageCells();
+  updatePageCellsIndexes();
+}
 
-  const first = CURRENT_PAGE * IMAGES_PER_PAGE + 1;
+function updatePageCellsIndexes() {
+  const pagesAmount = Math.ceil(ALL_IMAGES.length / IMAGES_PER_PAGE);
 
-  const last = Math.min(imagesLength, first + IMAGES_PER_PAGE - 1);
+  const half = Math.floor(MAX_DISLAYED_PAGES / 2);
 
-  document.querySelector(".page-info-label").textContent = imagesLength ? `${first}-${last}/${imagesLength}` : "0/0";
-  document.querySelector(".page-index-label").textContent = CURRENT_PAGE + 1;
+  let start = Math.max(0, CURRENT_PAGE - half);
+  let end = Math.min(pagesAmount, start + MAX_DISLAYED_PAGES);
 
-  updateGalleryPage();
+  start = Math.max(0, end - MAX_DISLAYED_PAGES);
+
+  const gridControl = document.querySelector(".grid-controls");
+
+  document.querySelector(".start-page-button").classList.toggle("invisible", start === 0);
+  document.querySelector(".start-ellipsis").classList.toggle("invisible", start === 0);
+  document.querySelector(".end-page-button").classList.toggle("invisible", end === pagesAmount);
+  document.querySelector(".end-ellipsis").classList.toggle("invisible", end === pagesAmount);
+
+  for (let i = start; i < end; i++) {
+    const button = gridControl.children[i - start + 2];
+
+    button.className = `change-page-button${i === CURRENT_PAGE ? " selected" : ""}`;
+    button.textContent = i + 1;
+    button.onclick = () => changePageIndex(i);
+  }
 }

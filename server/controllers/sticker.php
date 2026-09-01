@@ -15,7 +15,7 @@ function getUserThumbnails(PDO $db): void
     }
 
     $stmt = $db->prepare("
-        SELECT * FROM thumbnails
+        SELECT * FROM stickers
 		WHERE user_id IS NULL OR user_id = :user_id
         ORDER BY id ASC
     ");
@@ -24,12 +24,12 @@ function getUserThumbnails(PDO $db): void
     	"user_id" => $user["id"]
 	]);
 
-    $thumbnails = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stickers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    echo json_encode($thumbnails);
+    echo json_encode($stickers);
 }
 
-function getThumbnailImage(PDO $db, int $thumbnailId): void
+function getThumbnailImage(PDO $db, int $stickerId): void
 {
     $user = getUserFromSession($db);
 
@@ -40,13 +40,13 @@ function getThumbnailImage(PDO $db, int $thumbnailId): void
 
     $stmt = $db->prepare("
         SELECT *
-        FROM thumbnails
+        FROM stickers
         WHERE id = :id
         AND (user_id IS NULL OR user_id = :user_id)
     ");
 
     $stmt->execute([
-        "id" => $thumbnailId,
+        "id" => $stickerId,
         "user_id" => $user["id"]
     ]);
 
@@ -57,7 +57,7 @@ function getThumbnailImage(PDO $db, int $thumbnailId): void
         return;
     }
 
-    $path = __DIR__ . "/../assets/thumbnails/" . $sticker["filename"];
+    $path = __DIR__ . "/../assets/stickers/" . $sticker["filename"];
 
     if (!is_file($path)) {
         http_response_code(404);
@@ -68,6 +68,6 @@ function getThumbnailImage(PDO $db, int $thumbnailId): void
     readfile($path);
 }
 
-function deleteThumbnail(PDO $db, int $thumbnailId): void {
+function deleteThumbnail(PDO $db, int $stickerId): void {
 	
 }

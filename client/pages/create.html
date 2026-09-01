@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Camagru Edit</title>
+    <title>Camagru Create</title>
     <link rel="stylesheet" href="/style/index.css" />
     <link rel="stylesheet" href="/style/fx.css" />
     <link rel="stylesheet" href="/style/header.css" />
@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="/style/content.css" />
     <link rel="stylesheet" href="/style/overlay.css" />
 
-    <link rel="stylesheet" href="/style/edit-page/side.css" />
-    <link rel="stylesheet" href="/style/edit-page/sticker-list.css" />
-    <link rel="stylesheet" href="/style/edit-page/video-container.css" />
-    <link rel="stylesheet" href="/style/edit-page/webcam-footer.css" />
+    <link rel="stylesheet" href="/style/create-page/side.css" />
+    <link rel="stylesheet" href="/style/create-page/sticker-list.css" />
+    <link rel="stylesheet" href="/style/create-page/video-container.css" />
+    <link rel="stylesheet" href="/style/create-page/webcam-footer.css" />
   </head>
   <body>
     <script src="/src/global.js"></script>
@@ -26,25 +26,25 @@
     <script src="/src/api/session.js"></script>
     <script src="/src/api/user.js"></script>
 
-    <script src="/src/edit-page/init.js"></script>
-    <script src="/src/edit-page/sticker.js"></script>
-    <script src="/src/edit-page/canvas.js"></script>
-    <script src="/src/edit-page/side.js"></script>
-    <script src="/src/edit-page/utils.js"></script>
-    <script src="/src/edit-page/webcam.js"></script>
-    <script src="/src/edit-page/global.js"></script>
+    <script src="/src/create-page/init.js"></script>
+    <script src="/src/create-page/sticker.js"></script>
+    <script src="/src/create-page/canvas.js"></script>
+    <script src="/src/create-page/side.js"></script>
+    <script src="/src/create-page/utils.js"></script>
+    <script src="/src/create-page/webcam.js"></script>
+    <script src="/src/create-page/global.js"></script>
 
     <script src="/src/dom/form/handler.js"></script>
     <script src="/src/dom/form/validation.js"></script>
     <script src="/src/dom/dom.js"></script>
     <script src="/src/dom/prompt.js"></script>
 
-    <div id="notification" class="notification" hidden></div>
+    <div id="notification" class="notification"></div>
 
     <header>
       <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
       <button onclick="setLocation('/account')">Account</button>
-      <button class="selected" onclick="setLocation('/edit')" disabled>Edit</button>
+      <button class="selected" onclick="setLocation('/create')" disabled>Create</button>
       <button onclick="setLocation('/gallery')">Gallery</button>
 
       <div class="sign-zone">
@@ -62,7 +62,7 @@
           </div>
           <button hidden class="erase-bg-button" type="button" onclick="eraseBg()">x</button>
 
-          <h1 class="sticker-message">SELECT A THUMBNAIL =></h1>
+          <h1 class="sticker-message">SELECT A VIGNETTE =></h1>
           <h1 class="video-error-message" hidden>ALLOW CAMERA OR USE BACKGROUND</h1>
 
           <div class="sticker-current-wrapper" hidden>
@@ -93,7 +93,7 @@
             </button>
           </div>
         </div>
-        <div class="sticker-list"><label>Thumbnails</label></div>
+        <div class="sticker-list"><label>Vignettes</label></div>
         <canvas id="snapshot" hidden></canvas>
       </div>
       <div class="side">

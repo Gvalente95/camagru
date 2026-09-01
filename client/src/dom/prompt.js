@@ -51,19 +51,29 @@ function togglePromptKeys(enable) {
 }
 
 function toggleNotification(notification, color = "green") {
-  function resetNotification(text = "", color = "green", hidden = true) {
-    const el = document.getElementById("notification");
-    el.textContent = text;
-    el.style.color = color;
-    el.hidden = hidden;
+  const el = document.getElementById("notification");
+
+  if (!el) return;
+
+  if (NOTIFICATION_TIMEOUT) {
+    clearTimeout(NOTIFICATION_TIMEOUT);
+    NOTIFICATION_TIMEOUT = null;
   }
 
   NOTIFICATION = notification;
-  if (NOTIFICATION != null) {
-    resetNotification(notification, color, false);
-    setTimeout(() => {
-      NOTIFICATION = null;
-      resetNotification();
-    }, 2000);
-  } else resetNotification();
+
+  if (notification === null) {
+    el.classList.add("hide");
+    return;
+  }
+
+  el.textContent = notification;
+  el.style.color = color;
+  el.classList.remove("hide");
+
+  NOTIFICATION_TIMEOUT = setTimeout(() => {
+    NOTIFICATION = null;
+    NOTIFICATION_TIMEOUT = null;
+    el.classList.add("hide");
+  }, 2000);
 }

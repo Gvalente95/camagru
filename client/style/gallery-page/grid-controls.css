@@ -1,13 +1,12 @@
 .grid-controls {
   width: 60%;
-
   display: flex;
-  gap: 20px;
-
   justify-content: center;
   align-items: center;
   margin-top: 40px;
   position: relative;
+  gap: 2px;
+  min-height: 40px;
 }
 
 .page-button {
@@ -17,4 +16,95 @@
 .page-info-label {
   position: absolute;
   right: 0px;
+}
+
+.change-page-button {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+
+  color: var(--text);
+  opacity: 0.6;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease,
+    transform 0.15s ease;
+  opacity: 0.75;
+}
+
+.change-page-button:hover {
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.change-page-button.selected {
+  background: var(--text);
+  color: var(--background);
+  border-color: var(--text);
+  opacity: 1;
+  font-weight: 600;
+}
+
+.change-page-button:active {
+  transform: translateY(0);
+}
+
+.start-page-button,
+.end-page-button {
+  width: 32px;
+  height: 32px;
+
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+
+  color: var(--text);
+  font-size: 18px;
+  opacity: 0.45;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.start-page-button:hover,
+.end-page-button:hover {
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+  border-color: color-mix(in srgb, var(--text) 10%, transparent);
+
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.start-page-button:active,
+.end-page-button:active {
+  transform: translateY(0);
+}
+
+.page-ellipsis {
+  width: 20px;
+
+  text-align: center;
+  color: var(--text);
+  opacity: 0.4;
+
+  user-select: none;
+}
+
+.invisible {
+  visibility: hidden;
+  pointer-events: none;
 }
