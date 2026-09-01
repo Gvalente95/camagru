@@ -102,8 +102,12 @@ function createImage(PDO $db): void
     }
 
     $filename = bin2hex(random_bytes(16)) . ".png";
-    $uploadDir = __DIR__ . "/../uploads/";
-    $destination = $uploadDir . $filename;
+
+	$uploadDir = __DIR__ . "/../uploads/";
+	if (!is_dir($uploadDir)) {
+		mkdir($uploadDir, 0755, true);
+	}
+	$destination = $uploadDir . $filename;
 
     $success = createFinalImage(
         $bg["tmp_name"],
