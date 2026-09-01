@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camagru Gallery</title>
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/fx.css" />
+    <link rel="stylesheet" href="/style/header.css" />
+    <link rel="stylesheet" href="/style/footer.css" />
+    <link rel="stylesheet" href="/style/content.css" />
+    <link rel="stylesheet" href="/style/overlay.css" />
+
+    <link rel="stylesheet" href="/style/gallery-page/grid-container.css" />
+    <link rel="stylesheet" href="/style/gallery-page/grid-controls.css" />
+    <link rel="stylesheet" href="/style/gallery-page/cell.css" />
+    <link rel="stylesheet" href="/style/gallery-page/comment-list.css" />
+  </head>
+  <body>
+    <script src="/src/global.js"></script>
+    <script src="/src/init.js"></script>
+    <script src="/src/utils.js"></script>
+
+    <script src="/src/gallery-page/init.js"></script>
+    <script src="/src/gallery-page/global.js"></script>
+    <script src="/src/gallery-page/utils.js"></script>
+    <script src="/src/gallery-page/gallery/cell.js"></script>
+    <script src="/src/gallery-page/gallery/comment.js"></script>
+    <script src="/src/gallery-page/gallery/image.js"></script>
+    <script src="/src/gallery-page/gallery/page.js"></script>
+    <script src="/src/gallery-page/gallery/toggle.js"></script>
+
+    <script src="/src/api/email.js"></script>
+    <script src="/src/api/image.js"></script>
+    <script src="/src/api/comment.js"></script>
+    <script src="/src/api/like.js"></script>
+    <script src="/src/api/session.js"></script>
+    <script src="/src/api/user.js"></script>
+
+    <script src="/src/dom/form/handler.js"></script>
+    <script src="/src/dom/form/validation.js"></script>
+    <script src="/src/dom/dom.js"></script>
+    <script src="/src/dom/prompt.js"></script>
+
+    <div id="notification" class="notification" hidden></div>
+
+    <header>
+      <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
+      <button onclick="setLocation('/account')">Account</button>
+      <button onclick="setLocation('/edit')">Edit</button>
+      <button class="selected" onclick="setLocation('/gallery')" disabled>Gallery</button>
+
+      <div class="sign-zone">
+        <button id="logout-button" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="content gallery-layout">
+      <div class="main">
+        <div class="grid-controls">
+          <button class="page-button" onclick="changePage(-1)">&lt</button>
+          <label class="page-index-label">0/0</label>
+          <button class="page-button right" onclick="changePage(1)">&gt</button>
+
+          <label class="page-info-label">0/0</label>
+        </div>
+
+        <div class="grid-container">
+          <div class="images-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>© 2026 Giulio Valente. All rights reserved.</footer>
+
+    <script>
+      (async () => {
+        await init();
+        initGallery();
+      })();
+    </script>
+  </body>
+</html>

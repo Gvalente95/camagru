@@ -1,0 +1,35 @@
+.content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+
+.main {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: row;
+}
+
+.main h1 {
+  align-self: center;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .content {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .main {
+    flex-direction: column;
+    border-right: none;
+    border-bottom: 1px solid black;
+    min-height: 0;
+  }
+}

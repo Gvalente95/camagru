@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camagru Edit</title>
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/fx.css" />
+    <link rel="stylesheet" href="/style/header.css" />
+    <link rel="stylesheet" href="/style/footer.css" />
+    <link rel="stylesheet" href="/style/content.css" />
+    <link rel="stylesheet" href="/style/overlay.css" />
+
+    <link rel="stylesheet" href="/style/edit-page/side.css" />
+    <link rel="stylesheet" href="/style/edit-page/thumbnail-list.css" />
+    <link rel="stylesheet" href="/style/edit-page/video-container.css" />
+    <link rel="stylesheet" href="/style/edit-page/webcam-footer.css" />
+  </head>
+  <body>
+    <script src="/src/global.js"></script>
+    <script src="/src/init.js"></script>
+    <script src="/src/utils.js"></script>
+
+    <script src="/src/api/email.js"></script>
+    <script src="/src/api/image.js"></script>
+    <script src="/src/api/session.js"></script>
+    <script src="/src/api/user.js"></script>
+
+    <script src="/src/edit-page/init.js"></script>
+    <script src="/src/edit-page/thumbnail.js"></script>
+    <script src="/src/edit-page/canvas.js"></script>
+    <script src="/src/edit-page/side.js"></script>
+    <script src="/src/edit-page/utils.js"></script>
+    <script src="/src/edit-page/webcam.js"></script>
+    <script src="/src/edit-page/global.js"></script>
+
+    <script src="/src/dom/form/handler.js"></script>
+    <script src="/src/dom/form/validation.js"></script>
+    <script src="/src/dom/dom.js"></script>
+    <script src="/src/dom/prompt.js"></script>
+
+    <div id="notification" class="notification" hidden></div>
+
+    <header>
+      <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
+      <button onclick="setLocation('/account')">Account</button>
+      <button class="selected" onclick="setLocation('/edit')" disabled>Edit</button>
+      <button onclick="setLocation('/gallery')">Gallery</button>
+
+      <div class="sign-zone">
+        <button id="logout-button" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="main">
+        <div class="video-container">
+          <video id="webcam"></video>
+
+          <div class="spinner-container" hidden>
+            <div class="spinner black"></div>
+          </div>
+          <button hidden class="erase-bg-button" type="button" onclick="eraseBg()">x</button>
+
+          <h1 class="thumbnail-message">SELECT A THUMBNAIL =></h1>
+          <h1 class="video-error-message" hidden>ALLOW CAMERA OR USE BACKGROUND</h1>
+
+          <div class="thumbnail-current-wrapper" hidden>
+            <img class="thumbnail-current" />
+            <img class="thumbnail-resizer" src="/assets/icons/resize.svg" />
+          </div>
+
+          <img class="video-background" hidden />
+          <img class="flash-overlay" />
+
+          <div class="webcam-footer">
+            <div class="input-zone">
+              <input
+                type="file"
+                id="input-bg"
+                name="input-bg"
+                accept="image/png, image/jpeg"
+                hidden
+              />
+
+              <label for="input-bg" class="upload-bg-button">
+                <img src="assets/icons/background-image.svg" alt="Upload image" />
+              </label>
+            </div>
+
+            <button class="capture-webcam-button" onclick="captureImage()" disabled>
+              <img src="assets/icons/photo.svg" alt="Capture" />
+            </button>
+          </div>
+        </div>
+        <div class="thumbnail-list"><label>Thumbnails</label></div>
+        <canvas id="snapshot" hidden></canvas>
+      </div>
+      <div class="side">
+        <label class="side-label">No pictures taken.</label>
+      </div>
+    </div>
+
+    <footer>© 2026 Giulio Valente. All rights reserved.</footer>
+
+    <script>
+      (async () => {
+        await init();
+        initEditPage();
+      })();
+    </script>
+  </body>
+</html>

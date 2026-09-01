@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camagru Home</title>
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/fx.css" />
+    <link rel="stylesheet" href="/style/header.css" />
+    <link rel="stylesheet" href="/style/footer.css" />
+    <link rel="stylesheet" href="/style/content.css" />
+    <link rel="stylesheet" href="/style/overlay.css" />
+
+    <link rel="stylesheet" href="/style/account.css" />
+  </head>
+  <body>
+    <script src="/src/global.js"></script>
+    <script src="/src/init.js"></script>
+    <script src="/src/utils.js"></script>
+
+    <script src="/src/api/email.js"></script>
+    <script src="/src/api/image.js"></script>
+    <script src="/src/api/session.js"></script>
+    <script src="/src/api/user.js"></script>
+
+    <script src="/src/dom/form/handler.js"></script>
+    <script src="/src/dom/form/validation.js"></script>
+    <script src="/src/dom/dom.js"></script>
+    <script src="/src/dom/prompt.js"></script>
+
+    <div id="notification" class="notification" hidden></div>
+
+    <header>
+      <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
+
+      <button class="selected" onclick="setLocation('/account')" disabled>Account</button>
+      <button onclick="setLocation('/edit')">Edit</button>
+      <button onclick="setLocation('/gallery')">Gallery</button>
+
+      <div class="sign-zone">
+        <button id="logout-button" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="main">
+        <div class="prompt-box">
+          <form
+            id="account-form"
+            onsubmit="handleAccountForm(event, this)"
+            oninput="updateSubmitState(this)"
+          >
+            <div class="ftitle"></div>
+            <label>
+              Name:
+              <input type="text" name="fname" />
+            </label>
+            <label id="femail">
+              Email:
+              <input type="text" name="femail" />
+            </label>
+            <label>
+              Password:
+              <input type="password" name="fpassword" />
+            </label>
+
+            <label>
+              dark mode:
+              <input type="checkbox" name="fdark_mode" />
+            </label>
+            <label>
+              send email on comment:
+              <input type="checkbox" name="fnotify_comment" />
+            </label>
+
+            <div class="form-buttons">
+              <button type="submit" disabled>Confirm changes</button>
+            </div>
+            <label class="error-label"></label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer>© 2026 Giulio Valente. All rights reserved.</footer>
+
+    <script>
+      (async () => {
+        await init();
+      })();
+    </script>
+  </body>
+</html>

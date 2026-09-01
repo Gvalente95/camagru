@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/header.css" />
+    <link rel="stylesheet" href="/style/footer.css" />
+    <link rel="stylesheet" href="/style/content.css" />
+
+    <link rel="stylesheet" href="/style/error.css" />
+  </head>
+  <script src="/src/utils.js"></script>
+  <body>
+    <header>
+      <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
+    </header>
+
+    <div class="content">
+      <div class="main">
+        <h1>Sorry, this page is reserved to authentified users.</h1>
+        <button onclick="window.location.href = '/'">Go back</button>
+      </div>
+    </div>
+
+    <footer>© 2026 Giulio Valente. All rights reserved.</footer>
+  </body>
+</html>

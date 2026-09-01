@@ -1,41 +1,214 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style/index.css"></link >
-</head>
-<body>
-    <script src="src/init.js"></script>
-    <script src="src/user.js"></script>
-    <script src="src/constant.js"></script>
-    <script src="src/auth.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camagru Home</title>
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/fx.css" />
+    <link rel="stylesheet" href="/style/header.css" />
+    <link rel="stylesheet" href="/style/footer.css" />
+    <link rel="stylesheet" href="/style/content.css" />
+    <link rel="stylesheet" href="/style/overlay.css" />
 
+    <link rel="stylesheet" href="/style/gallery-page/grid-container.css" />
+    <link rel="stylesheet" href="/style/gallery-page/grid-controls.css" />
+    <link rel="stylesheet" href="/style/gallery-page/cell.css" />
+    <link rel="stylesheet" href="/style/gallery-page/comment-list.css" />
+  </head>
+  <body>
+    <script src="src/global.js"></script>
+    <script src="src/init.js"></script>
+    <script src="src/utils.js"></script>
+
+    <script src="/src/gallery-page/init.js"></script>
+    <script src="/src/gallery-page/global.js"></script>
+    <script src="/src/gallery-page/utils.js"></script>
+    <script src="/src/gallery-page/gallery/cell.js"></script>
+    <script src="/src/gallery-page/gallery/comment.js"></script>
+    <script src="/src/gallery-page/gallery/image.js"></script>
+    <script src="/src/gallery-page/gallery/page.js"></script>
+    <script src="/src/gallery-page/gallery/toggle.js"></script>
+
+    <script src="/src/api/email.js"></script>
+    <script src="/src/api/image.js"></script>
+    <script src="/src/api/comment.js"></script>
+    <script src="/src/api/like.js"></script>
+    <script src="/src/api/session.js"></script>
+    <script src="/src/api/user.js"></script>
+
+    <script src="src/dom/form/handler.js"></script>
+    <script src="src/dom/form/validation.js"></script>
+    <script src="src/dom/dom.js"></script>
+    <script src="src/dom/prompt.js"></script>
+
+    <div id="notification" class="notification" hidden></div>
 
     <header>
-        <div class="sign-zone">
-            <button id="login-button" onclick="handleLogin()">Sign in</button>
-            <button id="signup-button" onclick="handleSignup()">Sign up</button>            
-            <button id="logout-button" onclick="handleSignup()">Logout</button>
-        </div>
+      <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
+      <button class="header-link" onclick="setLocation('/account')" hidden>Account</button>
+      <button class="header-link" onclick="setLocation('/edit')" hidden>Edit</button>
+      <button class="header-link" onclick="setLocation('/gallery')" hidden disabled>Gallery</button>
 
+      <div class="sign-zone">
+        <button id="login-button" onclick="togglePrompt('login')" hidden>Sign in</button>
+        <button id="signup-button" onclick="togglePrompt('signup')" hidden>Sign up</button>
+        <button id="account-button" onclick="togglePrompt('account')" hidden>Account</button>
+      </div>
     </header>
 
+    <div class="content gallery-layout">
+      <div class="main"></div>
+      <div class="overlay" id="overlay" onclick="togglePrompt(null)" hidden>
+        <div class="prompt-box" onclick="event.stopPropagation()">
+          <form
+            id="login-form"
+            onsubmit="handleLoginConfirm(event, this)"
+            oninput="updateSubmitState(this)"
+            hidden
+          >
+            <div class="ftitle">Sign in</div>
+            <label>
+              Username:
+              <input type="text" name="fname" />
+            </label>
 
-    <div class="content">
-        <div class="main">
+            <label>
+              Password:
+              <input type="password" name="fpassword" />
+            </label>
 
+            <div class="form-buttons">
+              <button type="button" onclick="togglePrompt(null)">Back</button>
+              <button type="submit" disabled>Confirm</button>
+            </div>
+            <button
+              type="button"
+              id="toggle-send-reset-password-button"
+              onclick="togglePrompt('send-reset-password')"
+            >
+              Password forgotten
+            </button>
+            <label class="error-label"></label>
+          </form>
+
+          <form
+            id="signup-form"
+            onsubmit="handleSignupConfirm(event, this)"
+            oninput="updateSubmitState(this)"
+            hidden
+          >
+            <div class="ftitle">Sign up</div>
+            <label>
+              Username:
+              <input type="text" name="fname" />
+            </label>
+
+            <label id="femail">
+              Email:
+              <input type="text" name="femail" />
+            </label>
+
+            <label>
+              Password:
+              <input type="password" name="fpassword" />
+            </label>
+
+            <div class="form-buttons">
+              <button type="button" onclick="togglePrompt(null)">Cancel</button>
+              <button type="submit" disabled>Send Verification Email</button>
+            </div>
+            <label class="error-label"></label>
+          </form>
+
+          <form
+            id="send-reset-password-form"
+            onsubmit="handleSendPasswordResetEmail(event, this)"
+            oninput="updateSubmitState(this)"
+            hidden
+          >
+            <div class="ftitle">Reset Password</div>
+            <label>
+              Username:
+              <input type="text" name="fname" />
+            </label>
+            <label id="femail">
+              Email:
+              <input type="text" name="femail" />
+            </label>
+
+            <div class="form-buttons">
+              <button type="button" onclick="togglePrompt('login')">Back</button>
+              <button type="submit" disabled>Send request</button>
+            </div>
+            <label class="error-label"></label>
+          </form>
+
+          <form
+            id="reset-password-form"
+            onsubmit="handleResetPasswordConfirm(event, this)"
+            oninput="updateSubmitState(this)"
+            hidden
+          >
+            <div class="ftitle">Reset Password</div>
+            <label>
+              New Password:
+              <input type="password" name="fpassword" />
+            </label>
+            <div class="form-buttons">
+              <button type="button" onclick="togglePrompt(null)">Cancel</button>
+              <button type="submit" disabled>Confirm</button>
+            </div>
+            <label class="error-label"></label>
+          </form>
+
+          <form
+            id="account-form"
+            onsubmit="handleAccountForm(event, this)"
+            oninput="updateSubmitState(this)"
+            hidden
+          >
+            <div class="ftitle">Account</div>
+            <label>
+              Name:
+              <input type="text" name="fname" />
+            </label>
+            <label id="femail">
+              Email:
+              <input type="text" name="femail" />
+            </label>
+            <label>
+              Password:
+              <input type="password" name="fpassword" />
+            </label>
+            <div class="form-buttons">
+              <button type="button" onclick="togglePrompt(null)">Cancel</button>
+              <button type="button" onclick="logout()">Logout</button>
+              <button type="submit" disabled>Confirm changes</button>
+            </div>
+            <label class="error-label"></label>
+          </form>
         </div>
-        <div class="side">
+      </div>
 
-        </div>
+      <div class="grid-container">
+        <div class="images-grid"></div>
+      </div>
+
+      <div class="grid-controls">
+        <button class="page-button" onclick="changePage(-1)">&lt</button>
+        <label class="page-index-label">0/0</label>
+        <button class="page-button right" onclick="changePage(1)">&gt</button>
+        <label class="page-info-label">0/0</label>
+      </div>
     </div>
 
-    <footer>FOOTER</footer>
-
-     <script>
-        init();
+    <footer>© 2026 Giulio Valente. All rights reserved.</footer>
+    <script>
+      (async () => {
+        await init();
+        initGallery();
+      })();
     </script>
-</body>
+  </body>
 </html>

@@ -2,6 +2,13 @@ FROM php:8.4-cli-alpine
 
 WORKDIR /app
 
+RUN apk add --no-cache \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd
+
 COPY . .
 
 EXPOSE 8080

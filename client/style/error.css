@@ -1,0 +1,24 @@
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main h1 {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  font-size: 40px;
+  text-align: center;
+}
+
+.main button {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  margin-top: 20px;
+}
