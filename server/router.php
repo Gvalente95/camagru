@@ -4,7 +4,7 @@ require_once __DIR__ . "/controllers/email.php";
 require_once __DIR__ . "/controllers/image.php";
 require_once __DIR__ . "/controllers/session.php";
 require_once __DIR__ . "/controllers/user.php";
-require_once __DIR__ . "/controllers/thumbnail.php";
+require_once __DIR__ . "/controllers/sticker.php";
 require_once __DIR__ . "/controllers/comment.php";
 require_once __DIR__ . "/controllers/like.php";
 
@@ -137,7 +137,7 @@ function routeRequest(PDO $db): void
 	}
 
 
-    if (preg_match('#^/thumbnail/(\d+)$#', $path, $matches)) {
+    if (preg_match('#^/sticker/(\d+)$#', $path, $matches)) {
         $thumbnailId = (int) $matches[1];
 
         if ($method === "GET") {

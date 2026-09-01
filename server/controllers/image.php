@@ -77,15 +77,15 @@ function createImage(PDO $db): void
         "user_id" => $user["id"],
     ]);
 
-    $thumbnail = $stmt->fetch(PDO::FETCH_ASSOC);
+    $sticker = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($thumbnail === false) {
+    if ($sticker === false) {
         http_response_code(404);
         echo json_encode(["error" => "Thumbnail not found"]);
         return;
     }
 
-    $overlayPath = __DIR__ . "/../assets/thumbnails/" . $thumbnail["filename"];
+    $overlayPath = __DIR__ . "/../assets/thumbnails/" . $sticker["filename"];
 
     if (!is_file($overlayPath)) {
         http_response_code(404);
@@ -97,7 +97,7 @@ function createImage(PDO $db): void
 
     if ($overlayMime !== "image/png") {
         http_response_code(500);
-        echo json_encode(["error" => "Invalid thumbnail file"]);
+        echo json_encode(["error" => "Invalid sticker file"]);
         return;
     }
 

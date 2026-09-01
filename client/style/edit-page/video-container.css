@@ -17,7 +17,7 @@
   transform: scaleX(-1);
 }
 
-.thumbnail-message,
+.sticker-message,
 .video-error-message {
   position: absolute;
   color: white;
@@ -51,7 +51,7 @@
   transition: none;
 }
 
-.thumbnail-current-wrapper {
+.sticker-current-wrapper {
   position: absolute;
 
   z-index: 30;
@@ -65,7 +65,7 @@
   pointer-events: all;
 }
 
-.thumbnail-current {
+.sticker-current {
   display: block;
 
   height: 100%;
@@ -74,11 +74,11 @@
   pointer-events: none;
 }
 
-.thumbnail-current-wrapper:hover {
+.sticker-current-wrapper:hover {
   border: 1px solid black;
 }
 
-.thumbnail-resizer {
+.sticker-resizer {
   position: absolute;
 
   right: 0;

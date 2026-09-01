@@ -15,7 +15,7 @@ body {
   --webcam-footer-bg: rgba(255, 255, 255, 0.5);
   --video-message-bg: rgba(25, 25, 40, 0.78);
   --video-message-color: #ffffff;
-  --thumbnail-bg: #c7c7da;
+  --sticker-bg: #c7c7da;
   --accent: #dba530;
   --accent-hover: #e87c17;
   --border-color: #000231;
@@ -34,7 +34,7 @@ body.dark {
   --webcam-footer-bg: #2929336e;
   --video-message-bg: rgba(8, 8, 14, 0.82);
   --video-message-color: #ffffff;
-  --thumbnail-bg: #393951;
+  --sticker-bg: #393951;
   --accent: #8b83d6;
   --accent-hover: #a099e5;
   --border-color: #45455e;

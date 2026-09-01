@@ -47,9 +47,10 @@ header button.selected {
   color: var(--text-color);
   text-decoration: underline;
   pointer-events: none;
+    background: rgb(233, 115, 5);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.296);
 }
 
 header button:hover {
-  background: rgba(213, 213, 213, 0.17);
+  background: rgb(226, 191, 109);
 }

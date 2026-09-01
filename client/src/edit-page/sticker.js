@@ -1,5 +1,5 @@
 function setupThumbnailCurrent() {
-  const thumbnailWrapper = document.querySelector(".thumbnail-current-wrapper");
+  const thumbnailWrapper = document.querySelector(".sticker-current-wrapper");
 
   if (!thumbnailWrapper) return;
 
@@ -31,11 +31,11 @@ function setupThumbnailCurrent() {
 }
 
 function onThumbnailClick(img, thumbnailData) {
-  const prev = document.querySelector(".thumbnail-image.selected");
+  const prev = document.querySelector(".sticker-image.selected");
   if (prev) prev.classList.remove("selected");
   SELECTED_THUMBNAIL_ID = thumbnailData.id;
-  const wrapper = document.querySelector(".thumbnail-current-wrapper");
-  const currentImage = wrapper.querySelector(".thumbnail-current");
+  const wrapper = document.querySelector(".sticker-current-wrapper");
+  const currentImage = wrapper.querySelector(".sticker-current");
 
   wrapper.hidden = false;
   currentImage.src = img.src;
@@ -44,7 +44,7 @@ function onThumbnailClick(img, thumbnailData) {
 }
 
 function handleThumbnailClick(img, thumbnailData) {
-  setClassVisibility("thumbnail-message", false);
+  setClassVisibility("sticker-message", false);
   if (!IS_RECORDING && !UPLOADED_BG)
     startWebcamStream().then(() => {
       onThumbnailClick(img, thumbnailData);
@@ -54,12 +54,12 @@ function handleThumbnailClick(img, thumbnailData) {
 
 async function initThumbnailList() {
   const thumbnailsMetadata = await fetchThumbnails();
-  const listElement = document.querySelector(".thumbnail-list");
+  const listElement = document.querySelector(".sticker-list");
 
   for (const thumbnailData of thumbnailsMetadata) {
     const img = document.createElement("img");
-    img.className = "thumbnail-image";
-    img.src = `${API}/thumbnail/${thumbnailData.id}`;
+    img.className = "sticker-image";
+    img.src = `${API}/sticker/${thumbnailData.id}`;
     img.onclick = () => handleThumbnailClick(img, thumbnailData);
     listElement.appendChild(img);
   }

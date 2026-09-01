@@ -15,7 +15,7 @@ function getBaseCanvasSize() {
 
 function getOverlayPlacement() {
   const container = document.querySelector(".video-container");
-  const overlay = document.querySelector(".thumbnail-current-wrapper");
+  const overlay = document.querySelector(".sticker-current-wrapper");
 
   if (!container || !overlay) {
     return null;

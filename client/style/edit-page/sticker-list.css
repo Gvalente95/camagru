@@ -1,4 +1,4 @@
-.thumbnail-list {
+.sticker-list {
   width: 100px;
   height: 100%;
   display: flex;
@@ -9,17 +9,17 @@
   overflow-y: auto;
   gap: 10px;
   align-items: center;
-  background: var(--thumbnail-bg);
+  background: var(--sticker-bg);
 }
 
-.thumbnail-list label {
+.sticker-list label {
   align-self: center;
   margin-bottom: 10px;
   margin-top: 5px;
   border-bottom: 1px solid black;
 }
 
-.thumbnail-image {
+.sticker-image {
   width: 80%;
   aspect-ratio: 1 / 1;
 
@@ -33,10 +33,10 @@
 }
 
 @media (max-width: 700px) {
-  .thumbnail-list label {
+  .sticker-list label {
     display: none;
   }
-  .thumbnail-list {
+  .sticker-list {
     width: 100%;
     height: auto;
     flex: 0 0 auto;
@@ -47,11 +47,11 @@
     padding: 8px 0;
   }
 
-  .thumbnail-list label {
+  .sticker-list label {
     display: none;
   }
 
-  .thumbnail-image {
+  .sticker-image {
     width: 72px;
     height: 72px;
     flex: 0 0 72px;
@@ -60,12 +60,12 @@
   }
 }
 
-.thumbnail-image.selected {
+.sticker-image.selected {
   opacity: 0.6;
   outline: 3px solid white;
   outline-offset: -3px;
 }
 
-.thumbnail-image:hover {
+.sticker-image:hover {
   border: 1px solid white;
 }

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/style/overlay.css" />
 
     <link rel="stylesheet" href="/style/edit-page/side.css" />
-    <link rel="stylesheet" href="/style/edit-page/thumbnail-list.css" />
+    <link rel="stylesheet" href="/style/edit-page/sticker-list.css" />
     <link rel="stylesheet" href="/style/edit-page/video-container.css" />
     <link rel="stylesheet" href="/style/edit-page/webcam-footer.css" />
   </head>
@@ -27,7 +27,7 @@
     <script src="/src/api/user.js"></script>
 
     <script src="/src/edit-page/init.js"></script>
-    <script src="/src/edit-page/thumbnail.js"></script>
+    <script src="/src/edit-page/sticker.js"></script>
     <script src="/src/edit-page/canvas.js"></script>
     <script src="/src/edit-page/side.js"></script>
     <script src="/src/edit-page/utils.js"></script>
@@ -62,12 +62,12 @@
           </div>
           <button hidden class="erase-bg-button" type="button" onclick="eraseBg()">x</button>
 
-          <h1 class="thumbnail-message">SELECT A THUMBNAIL =></h1>
+          <h1 class="sticker-message">SELECT A THUMBNAIL =></h1>
           <h1 class="video-error-message" hidden>ALLOW CAMERA OR USE BACKGROUND</h1>
 
-          <div class="thumbnail-current-wrapper" hidden>
-            <img class="thumbnail-current" />
-            <img class="thumbnail-resizer" src="/assets/icons/resize.svg" />
+          <div class="sticker-current-wrapper" hidden>
+            <img class="sticker-current" />
+            <img class="sticker-resizer" src="/assets/icons/resize.svg" />
           </div>
 
           <img class="video-background" hidden />
@@ -93,7 +93,7 @@
             </button>
           </div>
         </div>
-        <div class="thumbnail-list"><label>Thumbnails</label></div>
+        <div class="sticker-list"><label>Thumbnails</label></div>
         <canvas id="snapshot" hidden></canvas>
       </div>
       <div class="side">

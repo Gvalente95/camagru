@@ -50,14 +50,14 @@ function getThumbnailImage(PDO $db, int $thumbnailId): void
         "user_id" => $user["id"]
     ]);
 
-    $thumbnail = $stmt->fetch(PDO::FETCH_ASSOC);
+    $sticker = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($thumbnail === false) {
+    if ($sticker === false) {
         http_response_code(404);
         return;
     }
 
-    $path = __DIR__ . "/../assets/thumbnails/" . $thumbnail["filename"];
+    $path = __DIR__ . "/../assets/thumbnails/" . $sticker["filename"];
 
     if (!is_file($path)) {
         http_response_code(404);
