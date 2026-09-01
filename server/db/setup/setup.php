@@ -7,6 +7,4 @@ require_once __DIR__ . "/sticker.php";
 require_once __DIR__ . "/token.php";
 require_once __DIR__ . "/user.php";
 
-
-
 echo "Database initialized.\n";
