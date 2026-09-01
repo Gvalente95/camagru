@@ -1,0 +1,4 @@
+.env
+db/database.sqlite
+assets/thumbnails/*
+uploads/*
