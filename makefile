@@ -1,15 +1,22 @@
 COMPOSE = docker-compose
+ENV_FILE = server/.env
 
+PHONY: up down rebuild ps logs start stop restart backend check-env secret
 
-PHONY: up down rebuild ps logs start stop restart backend
+check-env:
+	@if [ ! -f "$(ENV_FILE)" ]; then \
+		echo "Missing $(ENV_FILE)"; \
+		read -p "Resend API key: " key; \
+		echo "RESEND_API_KEY=$$key" > "$(ENV_FILE)"; \
+	fi
 
-up:
+up: check-env
 	$(COMPOSE) up -d
 
 down:
 	$(COMPOSE) down
 
-rebuild:
+rebuild: check-env
 	$(COMPOSE) up --build -d
 
 ps:
