@@ -1,0 +1,63 @@
+.cell-controls {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: row;
+  z-index: 10;
+  background-color: var(--cell-control-bg);
+  border-top-left-radius: 20px;
+  overflow: hidden;
+}
+
+.cell-controls,
+.image-delete-button {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.cell:hover .cell-controls,
+.cell:hover .image-delete-button {
+  opacity: 1;
+}
+
+.cell-control {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  padding: 5px;
+  background: none;
+  border: none;
+  transition: background 0.3s ease;
+  pointer-events: all;
+  box-sizing: border-box;
+}
+
+.cell-control.liked {
+  border-top-left-radius: inherit;
+  background-color: var(--button-bg);
+}
+
+.cell-control:hover {
+  background-color: white;
+}
+
+.cell-control > img {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  background: none;
+  transform: translateY(2px);
+}
+
+.count-icon {
+  color: black;
+  position: absolute;
+  right: 1px;
+  top: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  font-size: 10px;
+}

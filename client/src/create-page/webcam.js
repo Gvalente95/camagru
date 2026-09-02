@@ -50,9 +50,9 @@ async function startWebcamStream() {
 
     video.width = width;
     video.height = height;
-    video.style.width = "100%";
-    video.style.height = "100%";
-    video.style.objectFit = "cover";
+    // video.style.width = "100%";
+    // video.style.height = "100%";
+    // video.style.objectFit = "cover";
 
     IS_RECORDING = true;
     CAN_USE_RECORDER = true;

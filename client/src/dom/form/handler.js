@@ -139,7 +139,7 @@ async function handleAccountForm(event, form) {
   const notifyComments = notifyCommentsInput ? notifyCommentsInput.checked : undefined;
 
   if (password || name !== CURRENT_USER.name) {
-    const err = validateCredentials(form);
+    const err = validateCredentials(form, true);
     if (err) {
       togglePromptError(err);
       return;
@@ -237,8 +237,9 @@ function openDeleteImageForm(imageId) {
 
 function openDeleteStickerForm(stickerId) {
   toggleOverlay(true);
-  setIdVisibility("delete-image-prompt", true);
-  setIdVisibility("delete-sticker-prompt", false);
+
+  setIdVisibility("delete-image-prompt", false);
+  setIdVisibility("delete-sticker-prompt", true);
   const form = document.getElementById("delete-sticker-form");
   form.dataset.stickerId = stickerId;
 }

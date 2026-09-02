@@ -140,7 +140,7 @@ async function loadStickerList() {
       delElement.className = "sticker-delete-button";
 
       const delIcon = document.createElement("img");
-      delIcon.src = "/assets/icons/delete.png";
+      delIcon.src = "/assets/icons/delete.svg";
       delIcon.className = "sticker-delete-icon";
 
       delElement.appendChild(delIcon);

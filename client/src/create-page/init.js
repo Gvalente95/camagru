@@ -28,4 +28,5 @@ async function initEditPage() {
   watchCameraPermission();
   initInputBg();
   initStickers();
+  initImageDialog();
 }

@@ -31,22 +31,10 @@ async function updateGalleryCell(cell, imageData) {
   controls.appendChild(commentEl);
 
   if (currentUserId && Number(currentUserId) === Number(user_id)) {
-    const el = addElement(() => openDeleteImageForm(id), "delete.png");
+    const el = addElement(() => openDeleteImageForm(id), "delete.svg");
     el.className = "image-delete-button";
     imageContainer.appendChild(el);
   }
-}
-
-function selectCell(id) {
-  const imageData = ALL_IMAGES.find((image) => image.id === id);
-  if (!imageData) return;
-
-  const dialog = document.querySelector(".selected-cell");
-  const image = dialog.querySelector(".selected-cell-image");
-
-  image.src = `${API}/images/${id}`;
-
-  dialog.showModal();
 }
 
 function createGalleryCell(id, isMine) {
@@ -56,7 +44,7 @@ function createGalleryCell(id, isMine) {
   cell.dataset.imageId = id;
   cell.onclick = (e) => {
     if (e.target.closest(".comment-list, .cell-controls")) return;
-    selectCell(id);
+    openImageDialog(id);
   };
 
   const label = document.createElement("label");

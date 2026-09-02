@@ -20,16 +20,18 @@ body {
   --side-bg: #d2e2ca;
 
   --webcam-footer-bg: rgba(245, 250, 242, 0.72);
-  --video-message-bg: rgba(25, 36, 31, 0.82);
   --video-message-color: #ffffff;
 
   --sticker-bg: #dbe5c8;
 
-  --accent: #55966d;
-  --accent-hover: #3d8057;
+  --button-bg: #a7c5b2;
+  --button-bg-hover: #c7decf;
+
+  --button-delete-bg-hover: #c5a7a7;
+  --button-delete-bg: #dec7c7;
 
   --border-color: #aab9ae;
-  --cell-control-bg: rgba(232, 230, 202, 0.5);
+  --cell-control-bg: rgb(232, 230, 202);
 }
 
 :root.dark {
@@ -81,7 +83,7 @@ select {
 
 @font-face {
   font-family: "Fredoka";
-  src: url("/assets/fonts/Fredoka-VariableFont_wdth,wght.ttf") format("truetype");
+  src: url("/assets/fonts/Fredoka.ttf") format("truetype");
   font-weight: 300 700;
   font-stretch: 75% 125%;
   font-style: normal;

@@ -11,16 +11,21 @@
     <link rel="stylesheet" href="/style/footer.css" />
     <link rel="stylesheet" href="/style/content.css" />
     <link rel="stylesheet" href="/style/overlay.css" />
+    <link rel="stylesheet" href="/style/dialog.css" />
 
-    <link rel="stylesheet" href="/style/gallery-page/grid-container.css" />
-    <link rel="stylesheet" href="/style/gallery-page/grid-controls.css" />
-    <link rel="stylesheet" href="/style/gallery-page/cell.css" />
-    <link rel="stylesheet" href="/style/gallery-page/comment-list.css" />
+    <link rel="stylesheet" href="/style/gallery/grid-container.css" />
+    <link rel="stylesheet" href="/style/gallery/grid-controls.css" />
+    <link rel="stylesheet" href="/style/gallery/cell/cell.css" />
+    <link rel="stylesheet" href="/style/gallery/cell/control.css" />
+    <link rel="stylesheet" href="/style/gallery/cell/delete-button.css" />
+
+    <link rel="stylesheet" href="/style/gallery/comment-list.css" />
   </head>
   <body>
     <script src="/src/global.js"></script>
     <script src="/src/init.js"></script>
     <script src="/src/utils.js"></script>
+    <script src="/src/dialog.js"></script>
 
     <script src="/src/gallery-page/init.js"></script>
     <script src="/src/gallery-page/global.js"></script>
@@ -78,8 +83,8 @@
       <div class="main">
         <label class="empty-gallery-label" hidden>No photos yet... Be the first to make one!</label>
 
-        <dialog class="selected-cell">
-          <img class="selected-cell-image" />
+        <dialog class="selected-image-dialog">
+          <img class="selected-image" />
         </dialog>
 
         <div class="grid-controls"></div>

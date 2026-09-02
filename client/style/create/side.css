@@ -4,8 +4,8 @@
   flex-direction: column;
   gap: 10px;
 
-  flex: 0 0 200px;
-  min-width: 200px;
+  flex: 0 0 250px;
+  min-width: 250px;
   min-height: 0;
 
   background: var(--side-bg);
@@ -28,6 +28,12 @@
   width: 100%;
   height: auto;
   display: block;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.side-image:hover .delete-image-button {
+  opacity: 1;
 }
 
 .delete-image-button {
@@ -36,15 +42,14 @@
   right: 0px;
   padding: 10px;
   background: none;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--border-color);
+  background: var(--button-delete-bg);
   border-bottom-left-radius: 20px;
-  width: 32px;
-  transition: width 0.1s ease;
+  opacity: 0.2;
 }
 
 .delete-image-button:hover {
-  width: 40px;
+  background: var(--button-delete-bg-hover);
 }
 
 .delete-image-button > img {

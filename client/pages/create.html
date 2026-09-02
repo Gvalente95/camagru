@@ -12,25 +12,27 @@
     <link rel="stylesheet" href="/style/content.css" />
     <link rel="stylesheet" href="/style/overlay.css" />
 
-    <link rel="stylesheet" href="/style/create-page/side.css" />
-    <link rel="stylesheet" href="/style/create-page/sticker-list/header.css" />
-    <link rel="stylesheet" href="/style/create-page/sticker-list/list.css" />
-    <link rel="stylesheet" href="/style/create-page/sticker-list/sticker.css" />
+    <link rel="stylesheet" href="/style/create/side.css" />
+    <link rel="stylesheet" href="/style/create/sticker-list/header.css" />
+    <link rel="stylesheet" href="/style/create/sticker-list/list.css" />
+    <link rel="stylesheet" href="/style/create/sticker-list/sticker.css" />
+    <link rel="stylesheet" href="/style/dialog.css" />
 
-    <link rel="stylesheet" href="/style/create-page/video-container/background.css" />
-    <link rel="stylesheet" href="/style/create-page/video-container/container.css" />
-    <link rel="stylesheet" href="/style/create-page/video-container/flash.css" />
-    <link rel="stylesheet" href="/style/create-page/video-container/message.css" />
-    <link rel="stylesheet" href="/style/create-page/video-container/sticker.css" />
-    <link rel="stylesheet" href="/style/create-page/webcam-footer/capture-button.css" />
-    <link rel="stylesheet" href="/style/create-page/webcam-footer/upload-bg.css" />
-    <link rel="stylesheet" href="/style/create-page/webcam-footer/video-wait-button.css" />
-    <link rel="stylesheet" href="/style/create-page/webcam-footer/webcam-footer.css" />
+    <link rel="stylesheet" href="/style/create/video-container/background.css" />
+    <link rel="stylesheet" href="/style/create/video-container/container.css" />
+    <link rel="stylesheet" href="/style/create/video-container/flash.css" />
+    <link rel="stylesheet" href="/style/create/video-container/message.css" />
+    <link rel="stylesheet" href="/style/create/video-container/sticker.css" />
+    <link rel="stylesheet" href="/style/create/webcam-footer/capture-button.css" />
+    <link rel="stylesheet" href="/style/create/webcam-footer/upload-bg.css" />
+    <link rel="stylesheet" href="/style/create/webcam-footer/video-wait-button.css" />
+    <link rel="stylesheet" href="/style/create/webcam-footer/webcam-footer.css" />
   </head>
   <body>
     <script src="/src/global.js"></script>
     <script src="/src/init.js"></script>
     <script src="/src/utils.js"></script>
+    <script src="/src/dialog.js"></script>
 
     <script src="/src/api/email.js"></script>
     <script src="/src/api/image.js"></script>
@@ -89,7 +91,7 @@
           oninput="updateSubmitState(this)"
         >
           <div class="form-buttons">
-            <button type="cancel" onclick="toggleOverlay(false)">Cancel</button>
+            <button type="button" onclick="toggleOverlay(false)">Cancel</button>
             <button type="submit">Delete</button>
           </div>
         </form>
@@ -97,6 +99,10 @@
     </div>
 
     <div class="content">
+      <dialog class="selected-image-dialog">
+        <img class="selected-image" />
+      </dialog>
+
       <div class="main">
         <div class="video-container">
           <video id="webcam"></video>

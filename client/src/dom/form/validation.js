@@ -10,7 +10,9 @@ function validateName(name) {
   return null;
 }
 
-function validatePassword(password) {
+function validatePassword(password, onlyCheckEmpty = false) {
+  if (onlyCheckEmpty) return password ? null : "Password required";
+
   if (!password || password.length < PASS_LENGTH_MIN || password.length > PASS_LENGTH_MAX) {
     return `Password must be between ${PASS_LENGTH_MIN} and ${PASS_LENGTH_MAX} characters`;
   }
@@ -35,14 +37,14 @@ function validateEmail(email) {
   return null;
 }
 
-function validateCredentials(form) {
+function validateCredentials(form, onlyCheckEmptyPassword = false) {
   const name = form.querySelector('[name="fname"]')?.value;
   const password = form.querySelector('[name="fpassword"]')?.value;
   const email = form.querySelector('[name="femail"]')?.value || undefined;
 
   const nameError = validateName(name);
   if (nameError) return nameError;
-  const passError = validatePassword(password);
+  const passError = validatePassword(password, onlyCheckEmptyPassword);
   if (passError) return passError;
   const emailError = validateEmail(email);
   if (emailError) return emailError;

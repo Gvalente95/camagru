@@ -1,0 +1,21 @@
+.image-delete-button {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 32px;
+  height: 32px;
+  background-color: var(--button-delete-bg);
+  border: none;
+  transition: background 0.1s ease;
+  border-bottom-left-radius: 50%;
+}
+
+.image-delete-button > img {
+  background: none;
+  transform: translateX(2px);
+  scale: 0.8;
+}
+
+.image-delete-button:hover {
+  background-color: var(--button-delete-bg-hover);
+}

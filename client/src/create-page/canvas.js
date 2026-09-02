@@ -25,31 +25,25 @@ function getBaseCanvasSize() {
 }
 
 function getOverlayPlacement() {
-  const background = document.querySelector(".video-background");
   const overlay = document.querySelector(".sticker-current-wrapper");
 
-  if (!background || !overlay) {
-    return null;
-  }
+  const baseElement = IS_RECORDING ? document.getElementById("webcam") : document.querySelector(".video-background");
+
+  if (!baseElement || !overlay) return null;
 
   const { width: baseWidth, height: baseHeight } = getBaseCanvasSize();
 
-  const baseRect = background.getBoundingClientRect();
+  const baseRect = baseElement.getBoundingClientRect();
   const overlayRect = overlay.getBoundingClientRect();
 
-  const scale = baseWidth / baseRect.width;
-
-  const x = (overlayRect.left - baseRect.left) * scale;
-  const y = (overlayRect.top - baseRect.top) * scale;
-
-  const width = overlayRect.width * scale;
-  const height = overlayRect.height * scale;
+  const scaleX = baseWidth / baseRect.width;
+  const scaleY = baseHeight / baseRect.height;
 
   return {
-    x,
-    y,
-    width,
-    height,
+    x: (overlayRect.left - baseRect.left) * scaleX,
+    y: (overlayRect.top - baseRect.top) * scaleY,
+    width: overlayRect.width * scaleX,
+    height: overlayRect.height * scaleY,
   };
 }
 
