@@ -5,7 +5,6 @@ async function updatePageCells() {
   const end = start + IMAGES_PER_PAGE;
   const pageIds = new Set(ALL_IMAGES.slice(start, end).map((image) => String(image.id)));
 
-  // Show/hide cells based on current page
   for (const cell of gridElement.querySelectorAll(".cell")) {
     const id = cell.dataset.imageId;
     cell.hidden = !pageIds.has(id);
@@ -49,4 +48,43 @@ function updatePageCellsIndexes() {
     button.textContent = i + 1;
     button.onclick = () => changePageIndex(i);
   }
+}
+
+function initPages() {
+  const pagesAmount = Math.ceil(ALL_IMAGES.length / IMAGES_PER_PAGE);
+
+  const displayedPages = Math.min(pagesAmount, MAX_DISLAYED_PAGES);
+
+  const gridControl = document.querySelector(".grid-controls");
+
+  const startButton = document.createElement("button");
+  startButton.className = "start-page-button";
+  startButton.onclick = () => changePageIndex(Math.max(0, CURRENT_PAGE - MAX_DISLAYED_PAGES));
+  startButton.textContent = "<";
+  gridControl.appendChild(startButton);
+
+  const startEllipsis = document.createElement("span");
+  startEllipsis.className = "page-ellipsis start-ellipsis";
+  startEllipsis.textContent = "…";
+  gridControl.appendChild(startEllipsis);
+
+  for (let i = 0; i < displayedPages; i++) {
+    const el = document.createElement("button");
+    el.className = "change-page-button";
+    el.onclick = () => changePageIndex(i);
+    gridControl.appendChild(el);
+  }
+
+  const endEllipsis = document.createElement("span");
+  endEllipsis.className = "page-ellipsis end-ellipsis";
+  endEllipsis.textContent = "…";
+  gridControl.appendChild(endEllipsis);
+
+  const endButton = document.createElement("button");
+  endButton.className = "end-page-button";
+  endButton.onclick = () => changePageIndex(Math.min(CURRENT_PAGE + MAX_DISLAYED_PAGES, pagesAmount - 1));
+  endButton.textContent = ">";
+  gridControl.appendChild(endButton);
+
+  updatePageCellsIndexes();
 }

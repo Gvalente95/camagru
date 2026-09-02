@@ -1,0 +1,60 @@
+.sticker-current-wrapper {
+  position: absolute;
+  transform-origin: top left;
+
+  z-index: 30;
+
+  left: 20%;
+  top: 10%;
+
+  height: 50%;
+
+  cursor: move;
+  pointer-events: all;
+}
+
+.sticker-current {
+  display: block;
+
+  height: 100%;
+  width: auto;
+
+  pointer-events: none;
+}
+
+.sticker-current-wrapper:hover {
+  outline: 1px solid white;
+  box-shadow:
+    0 0 0 2px black,
+    0 2px 8px rgb(0 0 0 / 30%);
+
+  filter: brightness(1.05);
+  cursor: move;
+}
+
+.sticker-current-wrapper:hover .sticker-resizer {
+  opacity: 1;
+}
+
+.sticker-resizer {
+  position: absolute;
+
+  right: 0;
+  bottom: 0;
+
+  width: 32px;
+  height: 32px;
+
+  z-index: 31;
+
+  transform: scaleX(-1);
+
+  cursor: nwse-resize;
+  pointer-events: all;
+  opacity: 0;
+}
+
+.sticker-current-wrapper,
+.sticker-resizer {
+  touch-action: none;
+}

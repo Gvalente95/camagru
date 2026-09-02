@@ -25,6 +25,5 @@ const AUDIO = {
   delete: new Audio("/assets/audio/delete.mp3"),
   send: new Audio("/assets/audio/send.mp3"),
   click: new Audio("/assets/audio/click.wav"),
+  notification: new Audio("/assets/audio/notification.mp3"),
 };
-
-

@@ -3,34 +3,54 @@ function getBaseCanvasSize() {
   const background = document.querySelector(".video-background");
 
   if (IS_RECORDING && video) {
-    return { width: video.videoWidth, height: video.videoHeight };
+    return {
+      width: video.videoWidth,
+      height: video.videoHeight,
+    };
   }
 
   if (UPLOADED_BG && background) {
-    return { width: background.naturalWidth, height: background.naturalHeight };
+    const rect = background.getBoundingClientRect();
+
+    const width = 1280;
+    const height = width * (rect.height / rect.width);
+
+    return {
+      width: Math.round(width),
+      height: Math.round(height),
+    };
   }
 
   return { width: 1280, height: 720 };
 }
 
 function getOverlayPlacement() {
-  const container = document.querySelector(".video-container");
+  const background = document.querySelector(".video-background");
   const overlay = document.querySelector(".sticker-current-wrapper");
 
-  if (!container || !overlay) {
+  if (!background || !overlay) {
     return null;
   }
 
   const { width: baseWidth, height: baseHeight } = getBaseCanvasSize();
-  const containerRect = container.getBoundingClientRect();
+
+  const baseRect = background.getBoundingClientRect();
   const overlayRect = overlay.getBoundingClientRect();
 
-  const x = ((overlayRect.left - containerRect.left) / containerRect.width) * baseWidth;
-  const y = ((overlayRect.top - containerRect.top) / containerRect.height) * baseHeight;
-  const w = (overlayRect.width / containerRect.width) * baseWidth;
-  const h = (overlayRect.height / containerRect.height) * baseHeight;
+  const scale = baseWidth / baseRect.width;
 
-  return { x, y, width: w, height: h };
+  const x = (overlayRect.left - baseRect.left) * scale;
+  const y = (overlayRect.top - baseRect.top) * scale;
+
+  const width = overlayRect.width * scale;
+  const height = overlayRect.height * scale;
+
+  return {
+    x,
+    y,
+    width,
+    height,
+  };
 }
 
 function captureBaseImage() {
@@ -61,13 +81,48 @@ function captureBaseImage() {
   return canvas;
 }
 
-async function captureImage() {
-  if (!SELECTED_THUMBNAIL_ID) return;
+function waitForPhoto(seconds = 3) {
+  const start = performance.now();
+  const duration = seconds * 1000;
+  let previousRemaining = null;
+
+  const el = document.querySelector(".video-wait-button");
+  el.classList.add("active");
+
+  function loopWait(now) {
+    const elapsed = now - start;
+    const remaining = Math.ceil((duration - elapsed) / 1000);
+
+    if (remaining !== previousRemaining) {
+      previousRemaining = remaining;
+      el.textContent = remaining;
+      if (remaining > 0) playAudio(AUDIO.notification);
+    }
+
+    if (elapsed >= duration) {
+      CAN_TAKE_PHOTO = true;
+      el.textContent = seconds;
+      captureImage(true);
+      el.classList.remove("active");
+      return;
+    }
+    requestAnimationFrame(loopWait);
+  }
+  requestAnimationFrame(loopWait);
+}
+
+async function captureImage(force = false) {
+  if (!SELECTED_STICKER_ID) return;
   if (!CAN_TAKE_PHOTO) return;
 
   CAN_TAKE_PHOTO = false;
 
   document.querySelector(".capture-webcam-button").disabled = true;
+
+  if (USE_PHOTO_WAIT && !force) {
+    waitForPhoto(3);
+    return;
+  }
 
   const flashOverlay = document.querySelector(".flash-overlay");
   flashOverlay.className = "flash-overlay flash";
@@ -80,14 +135,14 @@ async function captureImage() {
 
   const baseBlob = await canvasToBlob(baseCanvas);
 
-  const res = await createImage(baseBlob, SELECTED_THUMBNAIL_ID, getOverlayPlacement());
+  const res = await createImage(baseBlob, SELECTED_STICKER_ID, getOverlayPlacement());
 
   if (res.ok) {
     const data = await res.json();
     HAS_UNSAVED_CHANGES = true;
     CAPTURED_IMAGE_IDS.push(data.id);
     updateSideImages();
-    if (SELECTED_THUMBNAIL_ID) document.querySelector(".capture-webcam-button").disabled = false;
+    if (SELECTED_STICKER_ID) document.querySelector(".capture-webcam-button").disabled = false;
     CAN_TAKE_PHOTO = true;
   } else {
     const error = await res.json();

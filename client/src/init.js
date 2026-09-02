@@ -15,8 +15,6 @@ async function init() {
     setLocation("/forbidden");
     return;
   }
-
-  setClassVisibility("header-title", !isMobile() || !CURRENT_USER);
 }
 
 function handleVerificationStatus() {

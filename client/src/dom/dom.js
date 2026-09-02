@@ -1,11 +1,6 @@
 function updateDom() {
   const is_authenticated = CURRENT_USER !== null;
 
-  if (!is_authenticated) {
-    const headerButtons = document.querySelectorAll(".header-link");
-    for (const b of headerButtons) b.hidden = true;
-  }
-
   setIdVisibility("login-button", !is_authenticated);
   setIdVisibility("signup-button", !is_authenticated);
   setIdVisibility("logout-button", is_authenticated);

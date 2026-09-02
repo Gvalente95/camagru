@@ -1,6 +1,10 @@
 function addElement(onclick, imagePath, count) {
   const container = document.createElement("button");
-  container.onclick = onclick;
+  container.onclick = (e) => {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    onclick();
+  };
   container.className = "cell-control";
 
   if (imagePath) {

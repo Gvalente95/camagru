@@ -1,13 +1,3 @@
-async function handleDeleteImage(imageId) {
-  playAudio(AUDIO.delete);
-  const res = await deleteImage(imageId);
-
-  if (!res.ok) return;
-
-  document.getElementById(`gallery-image_${imageId}`)?.remove();
-
-  await onImagesUpdate();
-}
 async function onImagesUpdate() {
   const res = await fetchImages();
   if (res.ok) ALL_IMAGES = await res.json();
@@ -24,7 +14,6 @@ function setImageRatios() {
       return;
     }
 
-    // Set default aspect ratio to prevent flickering
     if (!imageContainer.style.getPropertyValue("--image-ratio")) {
       imageContainer.style.setProperty("--image-ratio", "1");
     }

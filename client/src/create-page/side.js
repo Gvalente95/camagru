@@ -1,14 +1,4 @@
 async function updateSideImages() {
-  async function eraseImage(id) {
-    playAudio(AUDIO.delete);
-    const res = await deleteImage(id);
-    if (res.ok) {
-      const idx = CAPTURED_IMAGE_IDS.findIndex((sid) => sid === id);
-      CAPTURED_IMAGE_IDS.splice(idx, 1);
-      updateSideImages();
-    }
-  }
-
   const side = document.querySelector(".side");
   side.replaceChildren();
 
@@ -23,7 +13,7 @@ async function updateSideImages() {
     image.src = `${API}/images/${id}`;
 
     btn.className = "delete-image-button";
-    btn.onclick = () => eraseImage(id);
+    btn.onclick = () => openDeleteImageForm(id);
 
     const delBtnIcon = document.createElement("img");
     delBtnIcon.src = "/assets/icons/delete.png";

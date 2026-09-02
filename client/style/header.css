@@ -2,7 +2,7 @@ header {
   position: relative;
   background-color: var(--header-color);
   width: 100%;
-  height: 60px;
+  height: 80px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
   display: flex;
@@ -10,10 +10,22 @@ header {
   align-items: center;
 }
 
-.header-title {
+.home-button {
   position: absolute;
   left: 20px;
+
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 0;
   cursor: pointer;
+}
+
+.home-button > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 header .sign-zone {
@@ -31,7 +43,7 @@ header button {
   color: var(--text-color);
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 200;
   height: 100%;
   padding: 20px;
@@ -40,25 +52,13 @@ header button {
   border-right: 1px solid transparent;
 }
 
-header button::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  width: 1px;
-  height: 0;
-  background-color: var(--text-color);
-  transform: translateY(-50%);
-  transition: height 0.2s ease;
+header button:hover {
+  opacity: 0.6;
 }
 
-header button.selected {
+.page-button.selected {
   text-decoration: underline;
   pointer-events: none;
-}
-
-header button:hover::after {
-  height: 100%;
 }
 
 @media (max-width: 700px) {
@@ -74,5 +74,10 @@ header button:hover::after {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .home-button {
+    width: 32px;
+    height: 32px;
   }
 }

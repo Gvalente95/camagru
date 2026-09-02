@@ -1,0 +1,16 @@
+.upload-bg-button {
+  width: 80px;
+  height: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.upload-bg-button img {
+  width: 48px;
+  height: 48px;
+}

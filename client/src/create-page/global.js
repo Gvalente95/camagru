@@ -2,7 +2,7 @@ let IS_RECORDING = false;
 
 let CAPTURED_IMAGE_IDS = [];
 
-let SELECTED_THUMBNAIL_ID = null;
+let SELECTED_STICKER_ID = null;
 
 let UPLOADED_BG = null;
 
@@ -15,3 +15,5 @@ let IS_RESIZING_VIGNETTE = false;
 let CAN_TAKE_PHOTO = true;
 
 let CAN_USE_RECORDER = true;
+
+let USE_PHOTO_WAIT = false;

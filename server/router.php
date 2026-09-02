@@ -79,7 +79,12 @@ function routeRequest(PDO $db): void
     }
 
 	if ($method === 'GET' && $path === '/stickers'){
-		getUserThumbnails($db);
+		getUserStickers($db);
+		return;
+	}
+
+	if ($method === 'POST' && $path === '/stickers'){
+		createUserSticker($db);
 		return;
 	}
 
@@ -137,16 +142,16 @@ function routeRequest(PDO $db): void
 	}
 
 
-    if (preg_match('#^/sticker/(\d+)$#', $path, $matches)) {
+    if (preg_match('#^/stickers/(\d+)$#', $path, $matches)) {
         $stickerId = (int) $matches[1];
 
         if ($method === "GET") {
-            getThumbnailImage($db, $stickerId);
+            getStickerImage($db, $stickerId);
             return;
         }
 
         if ($method === "DELETE") {
-            deleteThumbnail($db, $stickerId);
+            deleteSticker($db, $stickerId);
             return;
         }
     }

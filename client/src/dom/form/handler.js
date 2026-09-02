@@ -193,3 +193,52 @@ async function handleAccountForm(event, form) {
 
   updateDom();
 }
+
+async function handleDeleteImageForm(e, form) {
+  e.preventDefault();
+  playAudio(AUDIO.delete);
+
+  const imageId = form.dataset.imageId;
+  const res = await deleteImage(imageId);
+
+  toggleOverlay(false);
+  const pathName = window.location.pathname;
+  if (pathName === "/gallery") {
+    const el = document.getElementById(`gallery-image_${imageId}`);
+    if (el) {
+      document.getElementById(`gallery-image_${imageId}`)?.remove();
+      await onImagesUpdate();
+    }
+  } else if (pathName === "/create") {
+    const idx = CAPTURED_IMAGE_IDS.findIndex((sid) => sid === imageId);
+    CAPTURED_IMAGE_IDS.splice(idx, 1);
+    updateSideImages();
+  }
+}
+
+async function handleDeleteStickerForm(e, form) {
+  e.preventDefault();
+  playAudio(AUDIO.delete);
+
+  const imageId = form.dataset.stickerId;
+  const res = await deleteSticker(imageId);
+  if (res.ok) loadStickerList();
+
+  toggleOverlay(false);
+}
+
+function openDeleteImageForm(imageId) {
+  toggleOverlay(true);
+  setIdVisibility("delete-sticker-prompt", false);
+  setIdVisibility("delete-image-prompt", true);
+  const form = document.getElementById("delete-image-form");
+  form.dataset.imageId = imageId;
+}
+
+function openDeleteStickerForm(stickerId) {
+  toggleOverlay(true);
+  setIdVisibility("delete-image-prompt", true);
+  setIdVisibility("delete-sticker-prompt", false);
+  const form = document.getElementById("delete-sticker-form");
+  form.dataset.stickerId = stickerId;
+}

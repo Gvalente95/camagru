@@ -20,14 +20,8 @@ async function updateGalleryCell(cell, imageData) {
 
   const likeEl = addElement(() => toggleLike(id), "like-icon.svg", like_count);
 
-  if (!currentUserId) {
-    likeEl.disabled = true;
-  }
-
-  if (liked_by_me) {
-    likeEl.style.background = "rgba(124, 169, 95, 0.28)";
-  }
-
+  if (!currentUserId) likeEl.disabled = true;
+  likeEl.classList.toggle("liked", liked_by_me);
   controls.appendChild(likeEl);
 
   const commentEl = addElement(() => toggleCommentsView(id), "comment-icon.svg", comment_count);
@@ -37,8 +31,22 @@ async function updateGalleryCell(cell, imageData) {
   controls.appendChild(commentEl);
 
   if (currentUserId && Number(currentUserId) === Number(user_id)) {
-    controls.appendChild(addElement(() => handleDeleteImage(id), "delete.png"));
+    const el = addElement(() => openDeleteImageForm(id), "delete.png");
+    el.className = "image-delete-button";
+    imageContainer.appendChild(el);
   }
+}
+
+function selectCell(id) {
+  const imageData = ALL_IMAGES.find((image) => image.id === id);
+  if (!imageData) return;
+
+  const dialog = document.querySelector(".selected-cell");
+  const image = dialog.querySelector(".selected-cell-image");
+
+  image.src = `${API}/images/${id}`;
+
+  dialog.showModal();
 }
 
 function createGalleryCell(id, isMine) {
@@ -46,6 +54,10 @@ function createGalleryCell(id, isMine) {
   cell.className = `cell${isMine ? " mine" : ""}`;
   cell.id = `gallery-image_${id}`;
   cell.dataset.imageId = id;
+  cell.onclick = (e) => {
+    if (e.target.closest(".comment-list, .cell-controls")) return;
+    selectCell(id);
+  };
 
   const label = document.createElement("label");
   label.className = "cell-label";
@@ -65,4 +77,18 @@ function createGalleryCell(id, isMine) {
   cell.appendChild(imageContainer);
 
   return cell;
+}
+
+async function createAllCells() {
+  const gridElement = document.querySelector(".images-grid");
+  gridElement.replaceChildren();
+
+  for (const image of ALL_IMAGES) {
+    const isMine = CURRENT_USER && image.user_id === CURRENT_USER.id;
+    const cell = createGalleryCell(image.id, isMine);
+    gridElement.appendChild(cell);
+    await updateGalleryCell(cell, image);
+  }
+
+  setImageRatios();
 }

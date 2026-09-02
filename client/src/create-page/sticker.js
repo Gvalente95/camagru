@@ -3,97 +3,167 @@ let stickerResizeCenterY = 0;
 let stickerResizeStartDistance = 0;
 let stickerResizeStartScale = 1;
 
-function setupThumbnailCurrent() {
+function setupStickerCurrent() {
   const stickerWrapper = document.querySelector(".sticker-current-wrapper");
-  stickerWrapper.addEventListener("mousedown", (e) => {
+  const stickerResizer = document.querySelector(".sticker-resizer");
+
+  stickerWrapper.addEventListener("pointerdown", (e) => {
     e.preventDefault();
     IS_DRAGGING_VIGNETTE = true;
+
+    stickerWrapper.setPointerCapture(e.pointerId);
+
     const rect = stickerWrapper.getBoundingClientRect();
+
     stickerDragOffsetX = e.clientX - rect.left;
     stickerDragOffsetY = e.clientY - rect.top;
   });
 
-  const stickerResizer = document.querySelector(".sticker-resizer");
-
-  stickerResizer.addEventListener("mousedown", (e) => {
+  stickerResizer.addEventListener("pointerdown", (e) => {
     e.preventDefault();
-    e.stopImmediatePropagation();
+    e.stopPropagation();
+
     IS_RESIZING_VIGNETTE = true;
+
+    stickerResizer.setPointerCapture(e.pointerId);
+
     const rect = stickerWrapper.getBoundingClientRect();
+
     stickerResizeCenterX = rect.left + rect.width / 2;
     stickerResizeCenterY = rect.top + rect.height / 2;
+
     stickerResizeStartDistance = Math.hypot(e.clientX - stickerResizeCenterX, e.clientY - stickerResizeCenterY);
+
     stickerResizeStartScale = parseFloat(stickerWrapper.style.scale) || 1;
   });
 
   function dragVignette(e) {
     const container = document.querySelector(".video-container");
+
     const containerRect = container.getBoundingClientRect();
     const stickerRect = stickerWrapper.getBoundingClientRect();
 
     const nextX = e.clientX - containerRect.left - stickerDragOffsetX;
+
     const nextY = e.clientY - containerRect.top - stickerDragOffsetY;
 
     stickerWrapper.style.left = `${clamp(nextX, 0, containerRect.width - stickerRect.width)}px`;
+
     stickerWrapper.style.top = `${clamp(nextY, 0, containerRect.height - stickerRect.height)}px`;
   }
+
   function resizeVignette(e) {
     const distance = Math.hypot(e.clientX - stickerResizeCenterX, e.clientY - stickerResizeCenterY);
+
     const scale = stickerResizeStartScale * (distance / stickerResizeStartDistance);
+
     stickerWrapper.style.scale = clamp(scale, 0.2, 2);
   }
 
-  document.addEventListener("mousemove", (e) => {
-    if (IS_DRAGGING_VIGNETTE) dragVignette(e);
-    else if (IS_RESIZING_VIGNETTE) resizeVignette(e);
+  document.addEventListener("pointermove", (e) => {
+    if (IS_DRAGGING_VIGNETTE) {
+      e.preventDefault();
+      dragVignette(e);
+    } else if (IS_RESIZING_VIGNETTE) {
+      e.preventDefault();
+      resizeVignette(e);
+    }
   });
 
-  document.addEventListener("mouseup", () => {
+  document.addEventListener("pointerup", () => {
+    IS_DRAGGING_VIGNETTE = false;
+    IS_RESIZING_VIGNETTE = false;
+  });
+
+  document.addEventListener("pointercancel", () => {
     IS_DRAGGING_VIGNETTE = false;
     IS_RESIZING_VIGNETTE = false;
   });
 }
 
-function onThumbnailClick(img, stickerData) {
-  const prev = document.querySelector(".sticker-image.selected");
+function onStickerClick(button, stickerId) {
+  const prev = document.querySelector(".sticker-button.selected");
   if (prev) prev.classList.remove("selected");
-  SELECTED_THUMBNAIL_ID = stickerData.id;
+  SELECTED_STICKER_ID = stickerId;
   const wrapper = document.querySelector(".sticker-current-wrapper");
   const currentImage = wrapper.querySelector(".sticker-current");
 
   wrapper.hidden = false;
+  const img = button.children[0];
   currentImage.src = img.src;
-  img.classList.add("selected");
+  button.classList.add("selected");
   if (UPLOADED_BG) toggleCaptureButton(true);
 }
 
-function handleThumbnailClick(e, img, stickerData) {
-  playAudio(AUDIO.click);
+function handleStickerClick(e, button, stickerId) {
   e.preventDefault();
-  if (SELECTED_THUMBNAIL_ID === stickerData.id) return;
+
+  if (SELECTED_STICKER_ID === stickerId) return;
+
+  playAudio(AUDIO.click);
+
+  document.querySelectorAll(".sticker-button.selected").forEach((el) => {
+    el.classList.remove("selected");
+  });
+
+  button.classList.add("selected");
 
   setClassVisibility("sticker-message", false);
-  if (!IS_RECORDING && !UPLOADED_BG)
+
+  if (!IS_RECORDING && !UPLOADED_BG && CAN_USE_RECORDER) {
     startWebcamStream().then(() => {
-      onThumbnailClick(img, stickerData);
+      onStickerClick(button, stickerId);
     });
-  else onThumbnailClick(img, stickerData);
+  } else onStickerClick(button, stickerId);
 }
 
-async function initThumbnailList() {
+async function loadStickerList() {
   const stickersMetadata = await fetchStickers();
   const listElement = document.querySelector(".sticker-list");
 
-  for (const stickerData of stickersMetadata) {
+  listElement.querySelectorAll(".sticker-button").forEach((el) => el.remove());
+
+  for (const { id, user_id } of stickersMetadata) {
+    const isMine = CURRENT_USER && user_id === CURRENT_USER.id;
+
+    const buttonEl = document.createElement("div");
+    buttonEl.className = `sticker-button${isMine ? " mine" : ""}`;
+
     const img = document.createElement("img");
-    img.className = "sticker-image";
-    img.src = `${API}/sticker/${stickerData.id}`;
-    img.onclick = (e) => handleThumbnailClick(e, img, stickerData);
-    listElement.appendChild(img);
+    img.src = `${API}/stickers/${id}`;
+    img.onclick = (e) => handleStickerClick(e, buttonEl, id);
+
+    buttonEl.appendChild(img);
+
+    if (isMine) {
+      const delElement = document.createElement("button");
+      delElement.className = "sticker-delete-button";
+
+      const delIcon = document.createElement("img");
+      delIcon.src = "/assets/icons/delete.png";
+      delIcon.className = "sticker-delete-icon";
+
+      delElement.appendChild(delIcon);
+      delElement.onclick = () => {
+        openDeleteStickerForm(id);
+      };
+
+      buttonEl.appendChild(delElement);
+    }
+
+    listElement.appendChild(buttonEl);
   }
 }
 
-async function initThumbnails() {
-  await initThumbnailList();
-  setupThumbnailCurrent();
+async function initStickers() {
+  await loadStickerList();
+  setupStickerCurrent();
+}
+
+async function handleStickerCreation(input) {
+  const image = input.files?.[0];
+  if (!image) return;
+  const res = await createSticker(image);
+  if (res.ok) loadStickerList();
+  input.value = "";
 }

@@ -1,17 +1,3 @@
-const fetchStickers = async () => {
-  try {
-    const res = await fetch(`${API}/stickers`, {
-      method: "GET",
-      credentials: "include",
-    });
-
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (error) {
-    return null;
-  }
-};
-
 async function createImage(background, stickerId, placement) {
   const formData = new FormData();
   formData.append("background", background, "background.png");

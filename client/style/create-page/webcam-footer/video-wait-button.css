@@ -1,0 +1,28 @@
+.video-wait-button {
+  background-color: rgb(123, 123, 123);
+  color: white;
+  border-radius: 50%;
+  border: 4px solid var(--text-color);
+
+  width: 46px;
+  height: 46px;
+  padding: 0;
+
+  font-size: 32px;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+}
+
+.video-wait-button.on {
+  opacity: 0.9;
+  background-color: rgb(194, 75, 62);
+}
+
+.video-wait-button.active {
+  opacity: 1;
+  background-color: red;
+}

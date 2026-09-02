@@ -42,3 +42,7 @@ function playAudio(audio) {
   audio.currentTime = 0;
   audio.play().catch(() => {});
 }
+
+function toggleOverlay(visible) {
+  setClassVisibility("overlay", visible);
+}

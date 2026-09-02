@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Camagru Create</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="stylesheet" href="/style/index.css" />
     <link rel="stylesheet" href="/style/fx.css" />
     <link rel="stylesheet" href="/style/header.css" />
@@ -12,9 +13,19 @@
     <link rel="stylesheet" href="/style/overlay.css" />
 
     <link rel="stylesheet" href="/style/create-page/side.css" />
-    <link rel="stylesheet" href="/style/create-page/sticker-list.css" />
-    <link rel="stylesheet" href="/style/create-page/video-container.css" />
-    <link rel="stylesheet" href="/style/create-page/webcam-footer.css" />
+    <link rel="stylesheet" href="/style/create-page/sticker-list/header.css" />
+    <link rel="stylesheet" href="/style/create-page/sticker-list/list.css" />
+    <link rel="stylesheet" href="/style/create-page/sticker-list/sticker.css" />
+
+    <link rel="stylesheet" href="/style/create-page/video-container/background.css" />
+    <link rel="stylesheet" href="/style/create-page/video-container/container.css" />
+    <link rel="stylesheet" href="/style/create-page/video-container/flash.css" />
+    <link rel="stylesheet" href="/style/create-page/video-container/message.css" />
+    <link rel="stylesheet" href="/style/create-page/video-container/sticker.css" />
+    <link rel="stylesheet" href="/style/create-page/webcam-footer/capture-button.css" />
+    <link rel="stylesheet" href="/style/create-page/webcam-footer/upload-bg.css" />
+    <link rel="stylesheet" href="/style/create-page/webcam-footer/video-wait-button.css" />
+    <link rel="stylesheet" href="/style/create-page/webcam-footer/webcam-footer.css" />
   </head>
   <body>
     <script src="/src/global.js"></script>
@@ -23,6 +34,7 @@
 
     <script src="/src/api/email.js"></script>
     <script src="/src/api/image.js"></script>
+    <script src="/src/api/sticker.js"></script>
     <script src="/src/api/session.js"></script>
     <script src="/src/api/user.js"></script>
 
@@ -42,15 +54,47 @@
     <div id="notification" class="notification"></div>
 
     <header>
-      <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
-      <button onclick="setLocation('/account')">Account</button>
-      <button class="selected" onclick="setLocation('/create')" disabled>Create</button>
-      <button onclick="setLocation('/gallery')">Gallery</button>
+      <button class="home-button">
+        <img onclick="setLocation('/')" src="/assets/icons/camagru.png" />
+      </button>
+      <button class="page-button" onclick="setLocation('/account')">Account</button>
+      <button class="page-button selected" onclick="setLocation('/create')" disabled>Create</button>
+      <button class="page-button" onclick="setLocation('/gallery')">Gallery</button>
 
       <div class="sign-zone">
         <button id="logout-button" onclick="logout()">Logout</button>
       </div>
     </header>
+
+    <div class="overlay" hidden onclick="toggleOverlay(false)">
+      <div class="prompt-box" id="delete-image-prompt" onclick="event.stopPropagation()">
+        <div class="ftitle">Delete image?</div>
+        <form
+          id="delete-image-form"
+          onsubmit="handleDeleteImageForm(event, this)"
+          oninput="updateSubmitState(this)"
+        >
+          <div class="form-buttons">
+            <button type="button" onclick="toggleOverlay(false)">Cancel</button>
+            <button type="submit">Delete</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="prompt-box" id="delete-sticker-prompt" onclick="event.stopPropagation()">
+        <div class="ftitle">Delete sticker?</div>
+        <form
+          id="delete-sticker-form"
+          onsubmit="handleDeleteStickerForm(event, this)"
+          oninput="updateSubmitState(this)"
+        >
+          <div class="form-buttons">
+            <button type="cancel" onclick="toggleOverlay(false)">Cancel</button>
+            <button type="submit">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <div class="content">
       <div class="main">
@@ -62,8 +106,8 @@
           </div>
           <button hidden class="erase-bg-button" type="button" onclick="eraseBg()">x</button>
 
-          <h1 class="sticker-message">SELECT A VIGNETTE =></h1>
-          <h1 class="video-error-message" hidden>ALLOW CAMERA OR USE BACKGROUND</h1>
+          <h1 class="sticker-message">Select a sticker =></h1>
+          <h1 class="video-error-message" hidden>Allow camera or select a background image</h1>
 
           <div class="sticker-current-wrapper" hidden>
             <img class="sticker-current" />
@@ -74,7 +118,7 @@
           <img class="flash-overlay" />
 
           <div class="webcam-footer">
-            <div class="input-zone">
+            <div class="webcam-footer-controls">
               <input
                 type="file"
                 id="input-bg"
@@ -91,13 +135,25 @@
             <button class="capture-webcam-button" onclick="captureImage()" disabled>
               <img src="assets/icons/photo.svg" alt="Capture" />
             </button>
+
+            <button onclick="togglePhotoWait()" class="video-wait-button"><div>3</div></button>
           </div>
         </div>
-        <div class="sticker-list"><label>Vignettes</label></div>
+        <div class="sticker-list">
+          <label class="sticker-list-header">
+            <span>Upload</span> <span class="upload-icon"></span>
+            <input
+              class="upload-sticker"
+              type="file"
+              accept="image/png, image/jpeg"
+              onchange="handleStickerCreation(this)"
+            />
+          </label>
+        </div>
         <canvas id="snapshot" hidden></canvas>
       </div>
       <div class="side">
-        <label class="side-label">No pictures taken.</label>
+        <label class="side-label">No pictures yet</label>
       </div>
     </div>
 

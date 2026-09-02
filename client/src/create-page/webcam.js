@@ -88,3 +88,12 @@ function stopWebcam() {
   IS_RECORDING = false;
   toggleCaptureButton(false);
 }
+
+function togglePhotoWait() {
+	playAudio(AUDIO.click)
+  USE_PHOTO_WAIT = !USE_PHOTO_WAIT;
+  const el = document.querySelector(".video-wait-button");
+
+  if (USE_PHOTO_WAIT) el.classList.add("on");
+  else el.classList.remove("on");
+}

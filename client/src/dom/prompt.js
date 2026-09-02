@@ -45,9 +45,7 @@ function togglePromptKeys(enable) {
     document.addEventListener("keydown", (e) => {
       togglePromptKey(e);
     });
-  } else {
-    document.body.removeEventListener("keydown", togglePromptKey);
-  }
+  } else document.body.removeEventListener("keydown", togglePromptKey);
 }
 
 function toggleNotification(notification, color = "green") {

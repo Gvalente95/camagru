@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Camagru Home</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="stylesheet" href="/style/index.css" />
     <link rel="stylesheet" href="/style/fx.css" />
     <link rel="stylesheet" href="/style/header.css" />
@@ -31,11 +32,15 @@
     <div id="notification" class="notification"></div>
 
     <header>
-      <h1 onclick="setLocation('/')" class="header-title" hidden>Camagru</h1>
+      <button class="home-button">
+        <img onclick="setLocation('/')" src="/assets/icons/camagru.png" />
+      </button>
 
-      <button class="selected" onclick="setLocation('/account')" disabled>Account</button>
-      <button onclick="setLocation('/create')">Create</button>
-      <button onclick="setLocation('/gallery')">Gallery</button>
+      <button class="page-button selected" onclick="setLocation('/account')" disabled>
+        Account
+      </button>
+      <button class="page-button" onclick="setLocation('/create')">Create</button>
+      <button class="page-button" onclick="setLocation('/gallery')">Gallery</button>
 
       <div class="sign-zone">
         <button id="logout-button" onclick="logout()">Logout</button>
