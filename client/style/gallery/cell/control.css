@@ -1,19 +1,31 @@
-.cell-controls {
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
+.cell-control {
+  position: relative;
+
+  min-width: 42px;
+  height: 34px;
+
   display: flex;
-  flex-direction: row;
-  z-index: 10;
-  background-color: var(--cell-control-bg);
-  border-top-left-radius: 20px;
-  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  padding: 0 7px;
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+  box-sizing: border-box;
+
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .cell-controls,
 .image-delete-button {
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
 }
 
 .cell:hover .cell-controls,
@@ -23,41 +35,65 @@
 
 .cell-control {
   position: relative;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  padding: 5px;
-  background: none;
+
+  width: 38px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  background: transparent;
   border: none;
-  transition: background 0.3s ease;
-  pointer-events: all;
-  box-sizing: border-box;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
 }
 
-.cell-control.liked {
-  border-top-left-radius: inherit;
-  background-color: var(--button-bg);
+.cell-control + .cell-control {
+  border-left: 1px solid rgba(37, 51, 45, 0.15);
 }
 
 .cell-control:hover {
-  background-color: white;
+  background-color: var(--button-bg-hover);
+}
+
+.cell-control:active {
+  transform: scale(0.94);
+}
+
+.cell-control.liked {
+  background-color: var(--button-bg-hover);
 }
 
 .cell-control > img {
   width: 16px;
   height: 16px;
-  pointer-events: none;
-  background: none;
-  transform: translateY(2px);
-}
 
+  flex-shrink: 0;
+
+  object-fit: contain;
+  pointer-events: none;
+
+  background: none;
+  transform: none;
+}
 .count-icon {
-  color: black;
-  position: absolute;
-  right: 1px;
-  top: 3px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+  position: static;
+
+  width: auto;
+  height: auto;
+
+  color: var(--text-color);
+
   font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+
+  pointer-events: none;
 }

@@ -3,41 +3,97 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  border-radius: 10px;
   overflow: visible;
+
   cursor: pointer;
-
-  transition: filter 180ms ease;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
 }
 
-.cell.mine {
-  border: 1px solid var(--text-color);
-}
-
-.cell[hidden] {
-  display: none;
+.cell.open {
+  border-radius: 10px 10px 0 0;
 }
 
 .cell-image-container {
   position: relative;
+
   width: 100%;
   aspect-ratio: var(--image-ratio, 1 / 1);
+
+  border-radius: inherit;
   overflow: hidden;
+
   background: rgba(0, 0, 0, 0.08);
 }
 
-.cell img {
+.cell-image {
   display: block;
+
   width: 100%;
   height: 100%;
+
   object-fit: contain;
   object-position: center;
+
   background: rgba(0, 0, 0, 0.05);
+}
+
+.cell-overlay {
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+
+  opacity: 0.5;
+
+  transition: opacity 0.3s ease;
+
+  pointer-events: none;
+}
+
+.cell:hover .cell-overlay {
+  opacity: 1;
+}
+
+.cell-overlay > * {
+  pointer-events: auto;
 }
 
 .cell-label {
   position: absolute;
-  color: white;
-  padding: 4px;
+  top: 0;
+  left: 0;
+
+  padding: 8px;
+  font-weight: 50;
+
   border-bottom-right-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+
+  background-color: var(--button-bg);
+}
+
+.cell.mine .cell-label {
+  background-color: var(--button-bg-hover);
+}
+
+.cell-controls {
+  position: absolute;
+
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+
+  background-color: var(--button-bg);
+
+  border-top-left-radius: 20px;
+
+  overflow: hidden;
+}
+
+.image-delete-button {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

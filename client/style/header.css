@@ -61,6 +61,21 @@ header button:hover {
   pointer-events: none;
 }
 
+.header-label {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  background: linear-gradient(180deg, #7fae8c 0%, #527a60 35%, #365544 65%, #1d3328 100%);
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.45));
+}
+
 @media (max-width: 700px) {
   header button {
     padding: 10px;
@@ -79,5 +94,11 @@ header button:hover {
   .home-button {
     width: 32px;
     height: 32px;
+  }
+
+  .header-label {
+    position: absolute;
+    left: 60px;
+    font-size: 20px;
   }
 }

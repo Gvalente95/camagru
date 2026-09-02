@@ -11,6 +11,7 @@ async function toggleCommentsView(imageId) {
   if (VIEWED_COMMENTS_ID === imageId) {
     VIEWED_COMMENTS_ID = null;
     existingContainer?.remove();
+    cell.classList.remove("open");
     if (currentClickHandler) {
       document.removeEventListener("click", currentClickHandler);
       currentClickHandler = null;
@@ -18,10 +19,12 @@ async function toggleCommentsView(imageId) {
     return;
   }
 
-  // Close previous comments and remove its handler
   if (VIEWED_COMMENTS_ID !== null) {
     const prevCell = document.getElementById(`gallery-image_${VIEWED_COMMENTS_ID}`);
-    prevCell?.querySelector(".comments-container")?.remove();
+    if (prevCell) {
+      prevCell.classList.remove("open");
+      prevCell.querySelector(".comments-container")?.remove();
+    }
     if (currentClickHandler) {
       document.removeEventListener("click", currentClickHandler);
       currentClickHandler = null;
@@ -29,8 +32,8 @@ async function toggleCommentsView(imageId) {
   }
 
   VIEWED_COMMENTS_ID = imageId;
+  cell.classList.add("open");
 
-  // Create comments container
   const container = document.createElement("div");
   container.className = "comments-container visible";
 
@@ -39,7 +42,6 @@ async function toggleCommentsView(imageId) {
 
   cell.appendChild(container);
 
-  // Close comments when clicking outside
   const handleClickOutside = (e) => {
     if (!container.contains(e.target) && !cell.contains(e.target)) {
       toggleCommentsView(imageId);

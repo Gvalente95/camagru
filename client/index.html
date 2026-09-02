@@ -11,16 +11,19 @@
     <link rel="stylesheet" href="/style/footer.css" />
     <link rel="stylesheet" href="/style/content.css" />
     <link rel="stylesheet" href="/style/overlay.css" />
+    <link rel="stylesheet" href="/style/dialog.css" />
 
-    <link rel="stylesheet" href="/style/gallery-page/grid-container.css" />
-    <link rel="stylesheet" href="/style/gallery-page/grid-controls.css" />
-    <link rel="stylesheet" href="/style/gallery-page/cell.css" />
-    <link rel="stylesheet" href="/style/gallery-page/comment-list.css" />
+    <link rel="stylesheet" href="/style/gallery/grid-container.css" />
+    <link rel="stylesheet" href="/style/gallery/grid-controls.css" />
+    <link rel="stylesheet" href="/style/gallery/cell/cell.css" />
+    <link rel="stylesheet" href="/style/gallery/cell/control.css" />
+    <link rel="stylesheet" href="/style/gallery/cell/delete-button.css" />
   </head>
   <body>
     <script src="src/global.js"></script>
     <script src="src/init.js"></script>
     <script src="src/utils.js"></script>
+    <script src="src/dialog.js"></script>
 
     <script src="/src/gallery-page/init.js"></script>
     <script src="/src/gallery-page/global.js"></script>
@@ -47,20 +50,21 @@
 
     <header>
       <button class="home-button">
-        <img onclick="setLocation('/account')" src="/assets/icons/camagru.png" />
+        <img onclick="setLocation('/')" src="/assets/icons/camagru.png" />
       </button>
-      <button class="page-button" onclick="setLocation('/account')" hidden>Account</button>
-      <button class="page-button" onclick="setLocation('/create')" hidden>Create</button>
-      <button class="page-button" onclick="setLocation('/gallery')" hidden disabled>Gallery</button>
 
+      <label class="header-label">CAMAGRU</label>
       <div class="sign-zone">
-        <button id="login-button" onclick="togglePrompt('login')" hidden>Sign in</button>
+        <button id="login-button" onclick="togglePrompt('login')" hidden>Login</button>
         <button id="signup-button" onclick="togglePrompt('signup')" hidden>Sign up</button>
-        <button id="account-button" onclick="togglePrompt('account')" hidden>Account</button>
       </div>
     </header>
 
     <div class="content gallery-layout">
+      <dialog class="selected-image-dialog">
+        <img class="selected-image" />
+      </dialog>
+
       <div class="main">
         <label class="empty-gallery-label">No photos yet... Be the first to make one!</label>
 

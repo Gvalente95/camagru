@@ -18,8 +18,10 @@
   gap: 16px;
   align-items: start;
   align-content: start;
-  padding-bottom: 20px;
   justify-content: center;
+  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 40px;
 }
 
 .grid-container {
@@ -36,6 +38,7 @@
   }
 
   .images-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0px;
   }
 }

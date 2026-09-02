@@ -57,6 +57,8 @@ function initPages() {
 
   const gridControl = document.querySelector(".grid-controls");
 
+  if (pagesAmount === 1) gridControl.style.opacity = 0;
+
   const startButton = document.createElement("button");
   startButton.className = "start-page-button";
   startButton.onclick = () => changePageIndex(Math.max(0, CURRENT_PAGE - MAX_DISLAYED_PAGES));

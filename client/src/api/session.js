@@ -12,7 +12,7 @@ const signup = async (name, password, email) =>
   });
 
 const login = async (name, password) => {
-  const res = await fetch(`${API}/login`, {
+  return fetch(`${API}/login`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -23,13 +23,6 @@ const login = async (name, password) => {
       password,
     }),
   });
-
-  if (res.ok) {
-    getMe();
-    setLocation("/");
-  }
-
-  return res;
 };
 
 const logout = async () => {

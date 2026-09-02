@@ -70,8 +70,7 @@ async function handleLoginConfirm(event, form) {
   let res = await login(name, password);
 
   if (res.ok) {
-    // togglePrompt(null);
-    setLocation("/account");
+    setLocation("/gallery");
   } else {
     let data = await res.json();
     togglePromptError(data.error ?? "Error: Wrong Credentials");

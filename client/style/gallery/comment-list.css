@@ -1,11 +1,12 @@
 .comments-container {
   position: absolute;
   top: 100%;
-  left: -1px;
+  left: 0px;
   right: 0;
-  width: calc(100% - 14px);
+  width: calc(100% - 18px);
   display: none;
   z-index: 1000;
+  cursor: default;
 }
 
 .comments-container.visible {
@@ -24,10 +25,13 @@
 
   overflow-y: auto;
 
-  background: var(--cell-control-bg);
+  background: var(--button-bg);
   backdrop-filter: blur(6px);
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
+
+  border: 1px solid var(--text-color);
+
   color: black;
   z-index: 12;
 }
@@ -55,10 +59,22 @@
 }
 
 .comment-input-row {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
+  margin-bottom: 10px;
+}
+
+.comment-input-row:after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0px;
+  height: 1px;
+  width: 100%;
+  background-color: black;
 }
 
 .comment-user-label {
@@ -73,11 +89,17 @@
 
 .comment-send-button {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   padding: 4px;
   border: none;
   background: none;
+  opacity: 0.5;
+  cursor: default;
+}
+
+.comment-send-button.active {
+  opacity: 1;
   cursor: pointer;
 }
 

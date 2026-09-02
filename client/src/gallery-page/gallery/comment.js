@@ -45,8 +45,10 @@ function addCommentRow(imageId) {
     const content = commentInput.value.trim();
     if (!content) return;
 
-    const res = await addComment(imageId, content);
+    playAudio(AUDIO.send);
+    sendButton.classList.remove("active");
 
+    const res = await addComment(imageId, content);
     if (res.ok) {
       const data = await res.json();
 
@@ -89,10 +91,12 @@ function addCommentRow(imageId) {
 
   sendButton.onclick = onSend;
 
+  commentInput.oninput = () => {
+    sendButton.classList.toggle("active", commentInput.value.length > 0);
+  };
+
   commentInput.onkeydown = (e) => {
-    if (e.key === "Enter") {
-      onSend();
-    }
+    if (e.key === "Enter") onSend();
   };
 
   commentRow.appendChild(userLabel);
