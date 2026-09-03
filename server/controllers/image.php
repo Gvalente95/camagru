@@ -52,10 +52,18 @@ function createImage(PDO $db): void
     }
 
     if ($bg["error"] !== UPLOAD_ERR_OK) {
+        error_log("Upload failed: " . json_encode($bg));
+
         http_response_code(400);
-        echo json_encode(["error" => "Background upload failed"]);
+        echo json_encode([
+            "error" => "Background upload failed",
+            "code" => $bg["error"],
+            "size" => $bg["size"] ?? null,
+            "name" => $bg["name"] ?? null,
+        ]);
         return;
     }
+
 
     $bgMime = mime_content_type($bg["tmp_name"]);
 

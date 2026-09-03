@@ -10,6 +10,7 @@ RUN apk add --no-cache \
     && docker-php-ext-install gd
 
 COPY . .
+COPY uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
 ENTRYPOINT ["sh", "/app/docker-entrypoint.sh"]
 
